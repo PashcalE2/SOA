@@ -1,52 +1,66 @@
-<script>
-</script>
-
 <template>
-  <div class="column">
-    <h3>Лабораторная работа #2</h3>
+  <header id="header">
+    Header
+  </header>
 
-    <h2>Вариант: 123</h2>
+  <div class="column" style="padding: 2%">
+    <div>
+      <Table
+          v-bind:music-bands="this.musicBands"
+      />
+    </div>
 
-    <p>
-    Разработать спецификацию в формате OpenAPI для набора веб-сервисов, реализующего следующую функциональность:
-    </p>
+    <div>
 
-    <p>
-      <b>Первый веб-сервис</b> должен осуществлять управление коллекцией объектов. В коллекции необходимо хранить объекты класса City, описание которого приведено ниже:
-    </p>
-
-    <pre><code>public class MusicBand {
-    private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
-    private String name; //Поле не может быть null, Строка не может быть пустой
-    private Coordinates coordinates; //Поле не может быть null
-    private java.time.LocalDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
-    private long numberOfParticipants; //Значение поля должно быть больше 0
-    private long singlesCount; //Значение поля должно быть больше 0
-    private MusicGenre genre; //Поле не может быть null
-    private Album bestAlbum; //Поле не может быть null
-}
-public class Coordinates {
-    private int x;
-    private Integer y; //Поле не может быть null
-}
-public class Album {
-    private String name; //Поле не может быть null, Строка не может быть пустой
-    private Long tracks; //Поле не может быть null, Значение поля должно быть больше 0
-    private Long length; //Поле может быть null, Значение поля должно быть больше 0
-}
-public enum MusicGenre {
-    RAP,
-    PSYCHEDELIC_CLOUD_RAP,
-    POST_ROCK,
-    POST_PUNK,
-    BRIT_POP;
-}
-      </code>
-    </pre>
+    </div>
   </div>
 </template>
 
-<style scoped>
+<script>
+import Table from "@/components/Table.vue";
+
+export default {
+  components: {Table},
+
+  data() {
+    return {
+      musicBands: []
+    }
+  },
+
+  mounted() {
+    for (let i = 0; i < 10; i++) {
+      this.putBand(
+          i,
+          "Str" + i,
+          { x: Math.random(), y: Math.random() },
+          Date.now(),
+          i,
+          i,
+          i,
+          { name: "Str" + i, tracks: i, length: i}
+      )
+    }
+  },
+
+  methods: {
+    putBand(id, name, coordinates, creationDate, numberOfParticipants, singlesCount, genre, album) {
+      this.musicBands.push({
+        id: id,
+        name: name,
+        coordinates: coordinates,
+        creationDate: creationDate,
+        numberOfParticipants: numberOfParticipants,
+        singlesCount: singlesCount,
+        genre: genre,
+        album: album
+      })
+    },
+  }
+}
+</script>
+
+<style>
 body {
   margin: 0;
 }
@@ -56,8 +70,8 @@ body, div {
   background-color: #ffffff;
   line-height: 1.5;
   color: black;
-  font-family: "Segoe UI",serif;
-  font-size: 1rem;
+  font-family: "Segoe UI", serif;
+  font-size: 18px;
 }
 
 pre {
@@ -113,6 +127,18 @@ div.error {
   font-size: 12px;
 }
 
+header {
+  background-color: #002040;
+  position: sticky;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: 0;
+  padding: 1em;
+  font-size: 1.5rem;
+  color: #f2f2f2;
+}
+
 input {
   font-size: 16px;
   box-sizing: border-box;
@@ -129,33 +155,6 @@ input.error {
 
 input:focus {
   border-color: #0060f0;
-}
-
-table, td, th {
-  margin: 10px auto 10px auto;
-  padding: 4px;
-  border-style: solid;
-  border-width: thin;
-  border-collapse: collapse;
-  text-align: center;
-  vertical-align: middle;
-  background-color: #ffffff;
-}
-
-td {
-  width: 40px;
-}
-
-tbody {
-  font-weight: normal;
-}
-
-thead {
-  font-weight: bold;
-}
-
-td:hover {
-  background: #afdfff;
 }
 
 label {
