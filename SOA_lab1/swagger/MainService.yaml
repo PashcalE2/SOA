@@ -6,37 +6,10 @@ info:
 
 paths:
 
-  /service/cities/{field}/{filter}/{page}/{size}:
+  /service/cities:
     get:
       summary: Get all cities
-      description: Returns a list of all cities with optional filtering by query parameters.
-      parameters:
-        - name: field
-          in: path
-          description: Filter by this field
-          required: false
-          schema:
-            type: string
-        - name: filter
-          in: path
-          description: Filter by value
-          required: false
-          schema:
-            type: string
-        - name: page
-          in: path
-          description: Page number
-          required: false
-          schema:
-            type: integer
-            minimum: 1
-        - name: size
-          in: path
-          description: Page size
-          required: false
-          schema:
-            type: integer
-            minimum: 1
+      description: Returns a list of all cities.
       responses:
         '200':
           description: Successful response
@@ -47,25 +20,14 @@ paths:
                 items:
                   xml:
                     name: City
-                  allOf:
+                  allOf: 
                     - $ref: '#/components/schemas/City'
-                xml:
+                xml: 
                   wrapped: true
                   name: Cities
-        '422':
-          description: Failed filter or sort
-          content:
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: 'Incorrect filter or sort params'
       tags:
         - Cities
-  
-  /service/cities:
+
     post:
       summary: Create a new city
       description: Creates a new city.
