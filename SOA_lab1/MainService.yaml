@@ -1,0 +1,280 @@
+openapi: 3.0.3
+info:
+  title: City API
+  description: SOA Lab 1
+  version: 1.0.0
+
+paths:
+
+  /service/cities:
+    get:
+      summary: Get all cities
+      description: Returns a list of all cities.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/xml:
+              schema:
+                type: array
+                items:
+                  xml:
+                    name: City
+                  allOf: 
+                    - $ref: '#/components/schemas/City'
+                xml: 
+                  wrapped: true
+                  name: Cities
+      tags:
+        - Cities
+
+    post:
+      summary: Create a new city
+      description: Creates a new city.
+      requestBody:
+        content:
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/City'
+      responses:
+        '201':
+          description: City created successfully
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: Bad request
+      tags:
+      - Cities
+
+  /service/cities/{id}:
+    get:
+      summary: Get city by ID
+      description: Returns a city by ID.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            format: int64
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/City'
+        '404':
+          description: City not found
+      tags:
+      - Cities
+
+    put:
+      summary: Update city by ID
+      description: Updates a city by ID.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            format: int64
+          required: true
+      requestBody:
+        content:
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/City'
+      responses:
+        '200':
+          description: City updated successfully
+        '400':
+          description: Bad request
+        '404':
+          description: City not found
+      tags:
+      - Cities
+
+    delete:
+      summary: Delete city by ID
+      description: Deletes a city by ID.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            format: int64
+          required: true
+      responses:
+        '204':
+          description: City deleted successfully
+        '404':
+          description: City not found
+      tags:
+      - Cities
+
+  /service/cities/delete-by-governor/{id}:
+    delete:
+      summary: Delete cities by governor
+      description: Deletes all cities where the governor is equal to the specified governor ID.
+      parameters:
+        - in: path
+          name: id
+          description: Governor object to match.
+          required: true
+          content:
+            application/xml:
+              schema:
+                type: integer
+                format: int64
+      responses:
+        '204':
+          description: Cities successfully deleted
+        '404':
+          description: City not found
+      tags:
+        - Cities
+
+  /service/cities/group-by-id:
+    get:
+      summary: Group cities by ID
+      description: Groups cities by ID and returns the count of cities in each group.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/xml:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    count:
+                      type: integer
+                  xml:
+                    name: Group
+                xml:
+                  wrapped: true
+                  name: Groups
+      tags:
+        - Cities
+
+  /service/cities/count-by-climate/{climate}:
+    get:
+      summary: Count cities by climate greater than the specified value
+      description: Returns the number of cities where the climate value is greater than the specified climate.
+      parameters:
+        - in: path
+          name: climate
+          schema:
+            type: string
+            items:
+              $ref: '#/components/schemas/Climate'
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/xml:
+              schema:
+                type: integer
+                xml:
+                  name: Count
+      tags:
+        - Cities
+
+components:
+  schemas:
+    City:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+          nullable: false
+        name: 
+          type: string
+        coordinates:
+          allOf:
+            - $ref: '#/components/schemas/Coordinates'
+          nullable: false
+        creationDate:
+          type: string
+          format: zoned-date-time
+          readOnly: true
+          nullable: false
+        area:
+          type: number
+          format: double
+          minimum: 0
+          exclusiveMinimum: true
+          nullable: false
+        population:
+          type: integer
+          format: int64
+          minimum: 0
+          exclusiveMinimum: true
+          nullable: false
+        metersAboveSeaLevel:
+          type: integer
+          format: int64
+        establishmentDate:
+          type: string
+          format: date
+        telephoneCode:
+          type: integer
+          format: int32
+          minimum: 0
+          exclusiveMinimum: true
+          maximum: 100000
+        climate:
+          allOf:
+            - $ref: '#/components/schemas/Climate'
+          nullable: true
+        governor:
+          allOf:
+            - $ref: '#/components/schemas/Human'
+          nullable: true
+
+    Coordinates:
+      type: object
+      properties:
+        x:
+          type: integer
+          format: int64
+          nullable: false
+        y:
+          type: number
+          format: float
+          nullable: false
+
+    Human:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+          minLength: 1
+        age:
+          type: integer
+          format: int32
+          minimum: 0
+          exclusiveMinimum: true
+        height:
+          type: integer
+          format: int32
+          minimum: 0
+          exclusiveMinimum: true
+
+    Climate:
+      type: string
+      enum:
+        - TROPICAL_SAVANNA
+        - HUMIDCONTINENTAL
+        - SUBARCTIC
+        - POLAR_ICECAP
+        - DESERT

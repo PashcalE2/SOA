@@ -1,0 +1,60 @@
+openapi: 3.0.3
+info:
+  title: Secondary service Api
+  version: 1.0.0
+paths:
+  /service/genocide/count/{id1}/{id2}/{id3}:
+    get:
+      summary: Get the total population of cities.
+      description: Calculates the total population of three cities with the specified IDs.
+      parameters:
+        - name: id1
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: id2
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: id3
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Total population count
+          content:
+            application/xml:
+              schema:
+                type: integer
+                xml:
+                  name: Count
+        '400':
+          description: Bad request
+      tags:
+      - Population
+
+  /service/genocide/move-to-poorest/{id}:
+    post:
+      summary: Move the population of a city.
+      description: Relocates the population of a city with a given id to a city with the lowest standard of living.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: The population of the city is succesfully moved
+        '400':
+          description: Bad request
+      tags:
+      - Population
