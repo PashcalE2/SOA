@@ -6,7 +6,7 @@ info:
 
 paths:
 
-  /service/cities/{field}/{filter}/{page}/{size}:
+  /cities/{field}/{filter}/{page}/{size}:
     get:
       summary: Get all cities
       description: Returns a list of all cities with optional filtering by query parameters.
@@ -52,20 +52,16 @@ paths:
                 xml:
                   wrapped: true
                   name: Cities
+        '400':
+          description: Bad request
+        '406':
+          description: Invalid filter values
         '422':
           description: Failed filter or sort
-          content:
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: 'Incorrect filter or sort params'
       tags:
         - Cities
   
-  /service/cities:
+  /cities:
     post:
       summary: Create a new city
       description: Creates a new city.
@@ -86,7 +82,7 @@ paths:
       tags:
       - Cities
 
-  /service/cities/{id}:
+  /cities/{id}:
     get:
       summary: Get city by ID
       description: Returns a city by ID.
@@ -106,6 +102,10 @@ paths:
                 $ref: '#/components/schemas/City'
         '404':
           description: City not found
+        '406':
+          description: City ID was not given
+        '500':
+          description: Internal server error
       tags:
       - Cities
 
@@ -131,6 +131,10 @@ paths:
           description: Bad request
         '404':
           description: City not found
+        '406':
+          description: City ID was not given
+        '500':
+          description: Internal server error
       tags:
       - Cities
 
@@ -149,10 +153,14 @@ paths:
           description: City deleted successfully
         '404':
           description: City not found
+        '406':
+          description: City ID was not given
+        '500':
+          description: Internal server error
       tags:
       - Cities
 
-  /service/cities/delete-by-governor/{id}:
+  /cities/delete-by-governor/{id}:
     delete:
       summary: Delete cities by governor
       description: Deletes all cities where the governor is equal to the specified governor ID.
@@ -170,11 +178,17 @@ paths:
         '204':
           description: Cities successfully deleted
         '404':
-          description: City not found
+          description: Governor not found
+        '406':
+          description: Governor ID was not given
+        '409':
+          description: Cities with such governor not found
+        '501':
+          description: Cities were not deleted
       tags:
         - Cities
 
-  /service/cities/group-by-id:
+  /cities/group-by-id:
     get:
       summary: Group cities by ID
       description: Groups cities by ID and returns the count of cities in each group.
@@ -197,10 +211,12 @@ paths:
                 xml:
                   wrapped: true
                   name: Groups
+        '500':
+          description: Internal server error
       tags:
         - Cities
 
-  /service/cities/count-by-climate/{climate}:
+  /cities/count-by-climate/{climate}:
     get:
       summary: Count cities by climate greater than the specified value
       description: Returns the number of cities where the climate value is greater than the specified climate.
@@ -221,6 +237,10 @@ paths:
                 type: integer
                 xml:
                   name: Count
+        '404':
+          description: No such Climate
+        '406':
+          description: Climate was not given
       tags:
         - Cities
 

@@ -3,7 +3,7 @@ info:
   title: Secondary service Api
   version: 1.0.0
 paths:
-  /service/genocide/count/{id1}/{id2}/{id3}:
+  /genocide/count/{id1}/{id2}/{id3}:
     get:
       summary: Get the total population of cities.
       description: Calculates the total population of three cities with the specified IDs.
@@ -37,10 +37,13 @@ paths:
                   name: Count
         '400':
           description: Bad request
+        '404':
+          description: Some of cities were not found
+          
       tags:
       - Population
 
-  /service/genocide/move-to-poorest/{id}:
+  /genocide/move-to-poorest/{id}:
     post:
       summary: Move the population of a city.
       description: Relocates the population of a city with a given id to a city with the lowest standard of living.
@@ -56,5 +59,7 @@ paths:
           description: The population of the city is succesfully moved
         '400':
           description: Bad request
+        '409': 
+          description: Already in the poorest city
       tags:
       - Population
