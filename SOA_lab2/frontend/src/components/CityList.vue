@@ -1,6 +1,8 @@
 <template>
   <div>
     <h1>Cities</h1>
+
+    <!-- Filter and Sort Section -->
     <div class="filter-sort-container">
       <div class="filter-container">
         <label>Filter Fields:</label>
@@ -22,6 +24,26 @@
       </div>
     </div>
 
+    <!-- Governor ID Deletion Section -->
+    <div class="governor-container">
+      <label>Governor ID to Delete:</label>
+      <input v-model="governorId" type="number" placeholder="Governor ID" />
+      <button @click="deleteCitiesByGovernor">Delete Cities by Governor</button>
+    </div>
+
+    <!-- Group by ID Section -->
+    <div class="group-container">
+      <button @click="groupCitiesById">Group Cities by ID</button>
+    </div>
+
+    <!-- Count by Climate Section -->
+    <div class="climate-container">
+      <label>Climate to Filter By:</label>
+      <input v-model="climate" type="text" placeholder="Climate (e.g., TROPICAL_SAVANNA)" />
+      <button @click="countCitiesByClimate">Count Cities by Climate</button>
+    </div>
+
+    <!-- Table Section -->
     <div class="table-container">
       <table>
         <thead>
@@ -57,11 +79,13 @@
       </table>
     </div>
 
+    <!-- Pagination Section -->
     <div class="pagination">
       <button @click="previousPage" :disabled="page <= 1">Previous</button>
       <button @click="nextPage">Next</button>
     </div>
 
+    <!-- Create City Link -->
     <router-link to="/create-city" class="router-link">Create New City</router-link>
   </div>
 </template>
@@ -77,6 +101,8 @@ export default {
       sortOrder: 'asc',
       page: 1,
       size: 10,
+      governorId: null, // Governor ID for deletion
+      climate: '', // Climate for counting cities
     };
   },
   methods: {
@@ -101,22 +127,74 @@ export default {
       this.page = 1;
       this.getCities();
     },
+    async deleteCitiesByGovernor() {
+      if (!this.governorId) {
+        alert("Please enter a valid Governor ID.");
+        return;
+      }
+
+      try {
+        const response = await fetch(`/cities/delete-by-governor/${this.governorId}`, { method: 'DELETE' });
+        if (!response.ok) {
+          this.handleError(response.status);
+          return;
+        }
+        alert("Cities successfully deleted.");
+        this.getCities();
+      } catch (error) {
+        alert("An unexpected error occurred: " + error.message);
+      }
+    },
+    async groupCitiesById() {
+      try {
+        const response = await fetch(`/cities/group-by-id`);
+        if (!response.ok) {
+          this.handleError(response.status);
+          return;
+        }
+        const data = await response.json();
+        alert(JSON.stringify(data, null, 2));
+      } catch (error) {
+        alert("An unexpected error occurred: " + error.message);
+      }
+    },
+    async countCitiesByClimate() {
+      if (!this.climate) {
+        alert("Please enter a valid climate.");
+        return;
+      }
+
+      try {
+        const response = await fetch(`/cities/count-by-climate/${this.climate}`);
+        if (!response.ok) {
+          this.handleError(response.status);
+          return;
+        }
+        const count = await response.json();
+        alert(`Number of cities with climate greater than ${this.climate}: ${count}`);
+      } catch (error) {
+        alert("An unexpected error occurred: " + error.message);
+      }
+    },
     handleError(status) {
       switch (status) {
         case 400:
           alert("Bad Request: Please check your input.");
           break;
-        case 406:
-          alert("Invalid filter values.");
-          break;
-        case 422:
-          alert("Failed to apply filter or sort.");
-          break;
         case 404:
-          alert("City not found.");
+          alert("Resource not found.");
+          break;
+        case 406:
+          alert("Invalid input.");
+          break;
+        case 409:
+          alert("Conflict: Cities with such governor not found.");
           break;
         case 500:
           alert("Internal server error. Please try again later.");
+          break;
+        case 501:
+          alert("Action not implemented.");
           break;
         default:
           alert("An unknown error occurred.");
@@ -124,19 +202,6 @@ export default {
     },
     editCity(id) {
       this.$router.push(`/edit-city/${id}`);
-    },
-    async deleteCity(id) {
-      // Deleting a city with error handling
-      try {
-        const response = await fetch(`/cities/${id}`, { method: 'DELETE' });
-        if (!response.ok) {
-          this.handleError(response.status);
-          return;
-        }
-        this.getCities();
-      } catch (error) {
-        alert("An unexpected error occurred: " + error.message);
-      }
     },
     nextPage() {
       this.page++;
@@ -150,7 +215,7 @@ export default {
       this.sortFields = field;
       this.getCities();
     }
-  },
+  }
 };
 </script>
 

@@ -144,6 +144,24 @@ export default {
 
       return isValid;
     },
+    handleError(status) {
+      switch (status) {
+        case 400:
+          alert("Bad Request: Please check your input.");
+          break;
+        case 404:
+          alert("City not found.");
+          break;
+        case 406:
+          alert("City ID was not given.");
+          break;
+        case 500:
+          alert("Internal server error. Please try again later.");
+          break;
+        default:
+          alert("An unknown error occurred.");
+      }
+    },
     submitForm() {
       if (!this.validateFields()) {
         return; // Если поля не валидны, не продолжаем
@@ -161,7 +179,7 @@ export default {
           })
           .catch((error) => {
             console.error("Error saving city:", error);
-            alert("Error saving city: " + (error.response?.data?.message || "An unexpected error occurred.")); // Всплывающее окно с ошибкой
+            this.handleError(error.response?.status); // Вызов метода обработки ошибок
           });
     },
     loadCity(id) {
@@ -171,7 +189,7 @@ export default {
           })
           .catch(error => {
             console.error("Error fetching city:", error);
-            alert("Error fetching city: " + (error.response?.data?.message || "An unexpected error occurred.")); // Всплывающее окно с ошибкой
+            this.handleError(error.response?.status); // Вызов метода обработки ошибок
           });
     },
   },
