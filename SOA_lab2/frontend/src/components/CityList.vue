@@ -38,8 +38,15 @@
 
     <!-- Count by Climate Section -->
     <div class="climate-container">
-      <label>Climate to Filter By:</label>
-      <input v-model="climate" type="text" placeholder="Climate (e.g., TROPICAL_SAVANNA)" />
+      <label>Select Climate:</label>
+      <select v-model="climate">
+        <option disabled value="">Please select one</option>
+        <option value="TROPICAL_SAVANNA">Tropical Savanna</option>
+        <option value="HUMIDCONTINENTAL">Humid Continental</option>
+        <option value="SUBARCTIC">Subarctic</option>
+        <option value="POLAR_ICECAP">Polar Icecap</option>
+        <option value="DESERT">Desert</option>
+      </select>
       <button @click="countCitiesByClimate">Count Cities by Climate</button>
     </div>
 
@@ -160,7 +167,7 @@ export default {
     },
     async countCitiesByClimate() {
       if (!this.climate) {
-        alert("Please enter a valid climate.");
+        alert("Please select a climate.");
         return;
       }
 
