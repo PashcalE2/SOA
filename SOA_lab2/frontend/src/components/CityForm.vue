@@ -156,10 +156,12 @@ export default {
 
       axios[method](url, this.city)
           .then(() => {
+            alert("City saved successfully!"); // Успешное сохранение
             this.$router.push("/"); // Перенаправление на список городов
           })
           .catch((error) => {
             console.error("Error saving city:", error);
+            alert("Error saving city: " + (error.response?.data?.message || "An unexpected error occurred.")); // Всплывающее окно с ошибкой
           });
     },
     loadCity(id) {
@@ -169,6 +171,7 @@ export default {
           })
           .catch(error => {
             console.error("Error fetching city:", error);
+            alert("Error fetching city: " + (error.response?.data?.message || "An unexpected error occurred.")); // Всплывающее окно с ошибкой
           });
     },
   },

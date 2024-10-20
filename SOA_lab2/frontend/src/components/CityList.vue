@@ -94,11 +94,11 @@ export default {
       }
     },
     applyFilter() {
-      this.page = 1; // Reset to the first page when applying a filter
+      this.page = 1;
       this.getCities();
     },
     sortCities() {
-      this.page = 1; // Reset to the first page when sorting
+      this.page = 1;
       this.getCities();
     },
     handleError(status) {
@@ -123,7 +123,6 @@ export default {
       }
     },
     editCity(id) {
-      // Navigate to edit city page
       this.$router.push(`/edit-city/${id}`);
     },
     async deleteCity(id) {
@@ -134,7 +133,7 @@ export default {
           this.handleError(response.status);
           return;
         }
-        this.getCities(); // Refresh cities list after deletion
+        this.getCities();
       } catch (error) {
         alert("An unexpected error occurred: " + error.message);
       }
@@ -148,7 +147,6 @@ export default {
       this.getCities();
     },
     sort(field) {
-      // Sorting logic (if needed)
       this.sortFields = field;
       this.getCities();
     }
