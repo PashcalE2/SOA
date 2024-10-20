@@ -7,7 +7,7 @@
         <input v-model="filterFields" placeholder="e.g., name,population" />
         <label>Filter Values:</label>
         <input v-model="filterValues" placeholder="e.g., New York,100000" />
-        <button @click="getCities">Apply Filter</button>
+        <button @click="applyFilter">Apply Filter</button>
       </div>
 
       <div class="sort-container">
@@ -18,7 +18,7 @@
           <option value="asc">Ascending</option>
           <option value="desc">Descending</option>
         </select>
-        <button @click="getCities">Sort</button>
+        <button @click="sortCities">Sort</button>
       </div>
     </div>
 
@@ -66,96 +66,103 @@
   </div>
 </template>
 
-
 <script>
-import axios from "axios";
-
 export default {
   data() {
     return {
       cities: [],
-      filterFields: "", // Строка с полями фильтрации, разделенными запятыми
-      filterValues: "", // Строка со значениями фильтрации, разделенными запятыми
-      sortFields: "", // Строка с полями сортировки, разделенными запятыми
-      sortOrder: "asc", // Порядок сортировки
+      filterFields: '',
+      filterValues: '',
+      sortFields: '',
+      sortOrder: 'asc',
       page: 1,
       size: 10,
     };
   },
   methods: {
-    getCities() {
-      // Формирование URL с фильтрами и сортировками
-      const filterFieldsArray = this.filterFields.split(/,\s*/); // Разделение по "," или ", "
-      const filterValuesArray = this.filterValues.split(/,\s*/); // Разделение по "," или ", "
-      const sortFieldsArray = this.sortFields.split(/,\s*/); // Разделение по "," или ", "
-
-      // Убедитесь, что количество полей фильтрации совпадает с количеством значений
-      if (filterFieldsArray.length !== filterValuesArray.length) {
-        alert("Number of filter fields must match number of filter values.");
-        return;
+    async getCities() {
+      try {
+        const response = await fetch(`/cities/${this.filterFields}/${this.filterValues}/${this.sortFields}/${this.sortOrder}/${this.page}/${this.size}`);
+        if (!response.ok) {
+          this.handleError(response.status);
+          return;
+        }
+        const data = await response.json();
+        this.cities = data;
+      } catch (error) {
+        alert("An unexpected error occurred: " + error.message);
       }
-
-      let url = `/api/cities/${filterFieldsArray.join(",")}/${filterValuesArray.join(",")}/${sortFieldsArray.join(",")}/${this.sortOrder}/${this.page}/${this.size}`;
-
-      axios
-          .get(url)
-          .then((response) => {
-            this.cities = response.data;
-          })
-          .catch((error) => {
-            console.error("Error fetching cities:", error);
-          });
     },
-    deleteCity(id) {
-      axios
-          .delete(`/api/cities/${id}`)
-          .then(() => {
-            this.getCities(); // Перезагружаем список после удаления
-          })
-          .catch((error) => {
-            console.error("Error deleting city:", error);
-          });
+    applyFilter() {
+      this.page = 1; // Reset to the first page when applying a filter
+      this.getCities();
     },
-    previousPage() {
-      if (this.page > 1) {
-        this.page--;
-        this.getCities();
+    sortCities() {
+      this.page = 1; // Reset to the first page when sorting
+      this.getCities();
+    },
+    handleError(status) {
+      switch (status) {
+        case 400:
+          alert("Bad Request: Please check your input.");
+          break;
+        case 406:
+          alert("Invalid filter values.");
+          break;
+        case 422:
+          alert("Failed to apply filter or sort.");
+          break;
+        case 404:
+          alert("City not found.");
+          break;
+        case 500:
+          alert("Internal server error. Please try again later.");
+          break;
+        default:
+          alert("An unknown error occurred.");
+      }
+    },
+    editCity(id) {
+      // Navigate to edit city page
+      this.$router.push(`/edit-city/${id}`);
+    },
+    async deleteCity(id) {
+      // Deleting a city with error handling
+      try {
+        const response = await fetch(`/cities/${id}`, { method: 'DELETE' });
+        if (!response.ok) {
+          this.handleError(response.status);
+          return;
+        }
+        this.getCities(); // Refresh cities list after deletion
+      } catch (error) {
+        alert("An unexpected error occurred: " + error.message);
       }
     },
     nextPage() {
       this.page++;
       this.getCities();
     },
-    editCity(id) {
-      this.$router.push(`/edit-city/${id}`);
+    previousPage() {
+      this.page--;
+      this.getCities();
     },
-  },
-  mounted() {
-    this.getCities();
+    sort(field) {
+      // Sorting logic (if needed)
+      this.sortFields = field;
+      this.getCities();
+    }
   },
 };
 </script>
 
 <style scoped>
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-th {
-  background-color: #007bff;
+.success {
+  background-color: #4CAF50;
   color: white;
-  cursor: pointer; /* Добавляем указатель для заголовков */
 }
-
-tr:hover {
-  background-color: #f1f1f1;
+.error {
+  background-color: #f44336;
+  color: white;
 }
 </style>
