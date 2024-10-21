@@ -1,11 +1,13 @@
 package model;
 
-import java.util.Collection;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 
+@Slf4j
 public class CityRepository {
     private final Map<Long, City> cities = new HashMap<>();
     private final AtomicLong counter = new AtomicLong();
@@ -13,15 +15,19 @@ public class CityRepository {
     public CityRepository() {
     }
 
-    public Collection<City> getCities() {
-        return cities.values();
+    public Map<Long, City> getCities() {
+        return cities;
     }
 
     public void addCity(City city) {
-        cities.put(city.getId(), city);
+        Long id = generateUniqueId();
+        city.setId(id);
+
+        cities.put(id, city);
+        log.info("Total cities now: {}", cities.size());
     }
 
-    public Long generateUniqueId() {
-        return counter.addAndGet(1);
+    private Long generateUniqueId() {
+        return counter.incrementAndGet();
     }
 }

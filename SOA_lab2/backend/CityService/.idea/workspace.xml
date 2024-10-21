@@ -11,21 +11,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e6a6a39-bc4a-48ae-b75c-7944f46153f6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/JaxRsApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/filter/CORSFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/City.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/CityRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Climate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Coordinates.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Human.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/resource/CityResource.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/exception/CannotCheckException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/exception/NoSuchFieldNameException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/CitiesList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/JaxRsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/JaxRsApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/filter/CORSFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/filter/CORSFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/City.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/CityRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CityRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Coordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Coordinates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Human.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Human.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/resource/CityResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/resource/CityResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,9 +42,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2nhQdWFevA89lyxpGmLvg9xCrFu" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -60,6 +59,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -86,6 +86,7 @@
       <option name="presentableId" value="Default" />
       <updated>1729422915579</updated>
       <workItem from="1729422916595" duration="16820000" />
+      <workItem from="1729531573299" duration="10627000" />
     </task>
     <servers />
   </component>

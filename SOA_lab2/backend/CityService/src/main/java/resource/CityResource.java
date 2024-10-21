@@ -1,14 +1,12 @@
 package resource;
 
+import exception.NoSuchFieldNameException;
+import lombok.extern.slf4j.Slf4j;
+import model.*;
+
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import lombok.extern.slf4j.Slf4j;
-import model.City;
-import model.CityRepository;
-import model.Coordinates;
-import model.Human;
-
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -17,7 +15,7 @@ import java.util.*;
 @Produces(MediaType.APPLICATION_XML)
 @Slf4j
 public class CityResource {
-    private final CityRepository cityRepository = new CityRepository();
+    private static final CityRepository cityRepository = new CityRepository();
 
     @GET
     @Path("{filter-fields}/{filter-values}/{sort-fields}/{sort-order}/{page}/{size}")
@@ -29,11 +27,14 @@ public class CityResource {
             @PathParam("page") Integer page,
             @PathParam("size") Integer size
     ) {
-        List<City> citiesList = new ArrayList<>(cityRepository.getCities());
+        Map<Long, City> cities = cityRepository.getCities();
+        log.info("cities size: " + cities.size());
+
+        List<City> citiesList = new ArrayList<>(cities.values());
 
         log.info("Filter fields: {}", filterFields);
 
-        if (filterFields != null && !filterFields.isEmpty() && sortFields != null && !sortFields.isEmpty()) {
+        {
             String[] filterFieldsArray = filterFields.split(",");
             String[] filterValuesArray = filterValues.split(",");
 
@@ -43,23 +44,32 @@ public class CityResource {
 
             citiesList.removeIf((city) -> {
                 for (int i = 0; i < filterFieldsArray.length; i++) {
-                    if (!city.fieldEquals(filterFieldsArray[i], filterValuesArray[i])) {
-                        return true;
+                    try {
+                        if (!city.fieldEquals(filterFieldsArray[i], filterValuesArray[i])) {
+                            log.info("Dropped city with id: {}", city.getId());
+                            return true;
+                        }
                     }
+                    catch (Exception ignored) {}
                 }
                 return false;
             });
+
+            log.info("Cities count after filter: {}", citiesList.size());
         }
 
         log.info("Sort fields: {}", sortFields);
 
-        if (sortFields != null && !sortFields.isEmpty()) {
+        {
             citiesList.sort((city1, city2) -> {
                 for (String field : sortFields.split(",")) {
-                    int compare = city1.compareBy(city2, field);
-                    if (compare != 0) {
-                        return sortOrder.equalsIgnoreCase("descending") ? -compare : compare;
+                    try {
+                        int compare = city1.compareBy(city2, field);
+                        if (compare != 0) {
+                            return sortOrder.equalsIgnoreCase("descending") ? -compare : compare;
+                        }
                     }
+                    catch (Exception ignored) {}
                 }
                 return 0;
             });
@@ -72,37 +82,15 @@ public class CityResource {
 
         log.info("Result count: {}", citiesList.size());
 
-        return Response.ok().entity(citiesList).build();
-    }
-
-    @GET
-    @Path("/test")
-    public Response getCoordinates() {
-        return Response.ok().entity(new Coordinates(1f, 2)).build();
-    }
-
-    @POST
-    @Path("/test/human")
-    public Response getCoordinates(Human human) {
-        human.setName(human.getName() + " " + human.getAge());
-        return Response.ok().entity(human).build();
-    }
-
-    @POST
-    @Path("/test/coordinates")
-    public Response getCoordinates(Coordinates coordinates) {
-        coordinates.setX(coordinates.getX() * 2);
-        coordinates.setY(coordinates.getY() * 2);
-        return Response.ok().entity(coordinates).build();
+        return Response.ok().entity(new CitiesList(citiesList)).build();
     }
 
     @POST
     public Response add(City city) {
-        if (!city.isValid()) {
+        if (!city.isValidRequest()) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
-        city.setId(cityRepository.generateUniqueId());
         city.setCreationDate(ZonedDateTime.now());
         cityRepository.addCity(city);
 

@@ -8,12 +8,15 @@ import java.util.Set;
 
 @ApplicationPath("/api")
 public class JaxRsApplication extends Application {
+    private final Set<Class<?>> classes = new HashSet<>();
+
+    public JaxRsApplication() {
+        classes.add(CityResource.class);
+        classes.add(CORSFilter.class);
+    }
+
     @Override
     public Set<Class<?>> getClasses() {
-        Set<Class<?>> resources = new HashSet<>();
-        resources.add(CityResource.class);
-        resources.add(CORSFilter.class);
-
-        return resources;
+        return classes;
     }
 }
