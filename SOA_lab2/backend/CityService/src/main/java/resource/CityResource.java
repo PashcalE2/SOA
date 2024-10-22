@@ -1,6 +1,5 @@
 package resource;
 
-import exception.NoSuchFieldNameException;
 import lombok.extern.slf4j.Slf4j;
 import model.*;
 
@@ -27,10 +26,7 @@ public class CityResource {
             @PathParam("page") Integer page,
             @PathParam("size") Integer size
     ) {
-        Map<Long, City> cities = cityRepository.getCities();
-        log.info("cities size: " + cities.size());
-
-        List<City> citiesList = new ArrayList<>(cities.values());
+        List<City> citiesList = new ArrayList<>(cityRepository.findAll());
 
         log.info("Filter fields: {}", filterFields);
 
@@ -97,5 +93,32 @@ public class CityResource {
         log.info("Added city: {}", city);
 
         return Response.status(Response.Status.CREATED).entity(city).build();
+    }
+
+    @GET
+    @Path("{id}")
+    public Response get(@PathParam("id") Long id) {
+        return Response.ok().entity(cityRepository.findById(id)).build();
+    }
+
+    @PUT
+    @Path("{id}")
+    public Response update(@PathParam("id") Long id, City city) {
+        city = cityRepository.updateCity(id, city);
+        return Response.ok().build();
+    }
+
+    @DELETE
+    @Path("{id}")
+    public Response delete(@PathParam("id") Long id) {
+        cityRepository.deleteCity(id);
+        return Response.ok().build();
+    }
+
+    @DELETE
+    @Path("/delete-by-governor/{id}")
+    public Response deleteByGovernor(@PathParam("id") Long governorId) {
+        cityRepository.deleteByGovernor(governorId);
+        return Response.ok().build();
     }
 }
