@@ -115,7 +115,7 @@ export default {
   methods: {
     async getCities() {
       try {
-        const response = await fetch(`/cities/${this.filterFields}/${this.filterValues}/${this.sortFields}/${this.sortOrder}/${this.page}/${this.size}`);
+        const response = await fetch(`https://localhost:22600/cities/${this.filterFields}/${this.filterValues}/${this.sortFields}/${this.sortOrder}/${this.page}/${this.size}`);
         if (!response.ok) {
           this.handleError(response.status);
           return;
@@ -140,7 +140,7 @@ export default {
       }
 
       try {
-        const response = await fetch(`/cities/delete-by-governor/${this.governorName}`, { method: 'DELETE' });
+        const response = await fetch(`https://localhost:22600/cities/delete-by-governor/${this.governorName}`, { method: 'DELETE' });
         if (!response.ok) {
           this.handleError(response.status);
           return;
@@ -153,7 +153,7 @@ export default {
     },
     async groupCitiesById() {
       try {
-        const response = await fetch(`/cities/group-by-id`);
+        const response = await fetch(`https://localhost:22600/cities/group-by-id`);
         if (!response.ok) {
           this.handleError(response.status);
           return;
@@ -171,7 +171,7 @@ export default {
       }
 
       try {
-        const response = await fetch(`/cities/count-by-climate/${this.climate}`);
+        const response = await fetch(`https://localhost:22600/cities/count-by-climate/${this.climate}`);
         if (!response.ok) {
           this.handleError(response.status);
           return;
@@ -184,7 +184,7 @@ export default {
     },
     async deleteCity(id) {
       try {
-        const response = await fetch(`/cities/${id}`, { method: 'DELETE' });
+        const response = await fetch(`https://localhost:22600/cities/${id}`, { method: 'DELETE' });
         if (!response.ok) {
           this.handleError(response.status);
           return;

@@ -168,8 +168,8 @@ export default {
       }
 
       const url = this.isEditMode
-          ? `/api/cities/${this.city.id}`
-          : `/api/cities`;
+          ? `https://localhost:22600/cities/${this.city.id}`
+          : `https://localhost:22600/cities`;
       const method = this.isEditMode ? 'put' : 'post';
 
       axios[method](url, this.city)
@@ -183,7 +183,7 @@ export default {
           });
     },
     loadCity(id) {
-      axios.get(`/api/cities/${id}`)
+      axios.get(`https://localhost:22600/cities/${id}`)
           .then(response => {
             this.city = response.data;
           })
@@ -212,10 +212,5 @@ form {
 
 label {
   margin-top: 10px;
-}
-
-.error {
-  color: red;
-  font-size: 0.9em;
 }
 </style>
