@@ -1,0 +1,276 @@
+{
+	"info": {
+		"_postman_id": "b82a0f65-f181-4e63-8323-241e9cad554a",
+		"name": "SOA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39146114"
+	},
+	"item": [
+		{
+			"name": "cities",
+			"item": [
+				{
+					"name": "Get filtered sorted paginated",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:22600/cities/idы/2/id/ASCENDING/0/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "22600",
+							"path": [
+								"cities",
+								"idы",
+								"2",
+								"id",
+								"ASCENDING",
+								"0",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get sorted paginated",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:22600/cities/id/ASCENDING/0/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "22600",
+							"path": [
+								"cities",
+								"id",
+								"ASCENDING",
+								"0",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"connection": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "<city>\r\n\t<name>string</name>\r\n\t<coordinates>\r\n\t\t<x>0</x>\r\n\t\t<y>0</y>\r\n\t</coordinates>\r\n\t<area>1</area>\r\n\t<population>1</population>\r\n\t<metersAboveSeaLevel>0</metersAboveSeaLevel>\r\n\t<establishmentDate>2024-10-21</establishmentDate>\r\n\t<telephoneCode>100000</telephoneCode>\r\n\t<climate>TROPICAL_SAVANNA</climate>\r\n\t<governor>\r\n\t\t<name>string</name>\r\n\t\t<age>1</age>\r\n\t\t<height>1</height>\r\n\t</governor>\r\n</city>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:22600/cities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "22600",
+							"path": [
+								"cities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:22600/cities/123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "22600",
+							"path": [
+								"cities",
+								"123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "<city>\r\n\t<name>string</name>\r\n\t<coordinates>\r\n\t\t<x>0</x>\r\n\t\t<y>0</y>\r\n\t</coordinates>\r\n\t<area>1</area>\r\n\t<population>1</population>\r\n\t<metersAboveSeaLevel>0</metersAboveSeaLevel>\r\n\t<establishmentDate>2024-10-21</establishmentDate>\r\n\t<telephoneCode>100000</telephoneCode>\r\n\t<climate>SUBARCTIC</climate>\r\n\t<governor>\r\n\t\t<name>string</name>\r\n\t\t<age>1</age>\r\n\t\t<height>1</height>\r\n\t</governor>\r\n</city>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:22600/cities/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "22600",
+							"path": [
+								"cities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:22600/cities/123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "22600",
+							"path": [
+								"cities",
+								"123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete by governor",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:22600/cities/delete-by-governor/123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "22600",
+							"path": [
+								"cities",
+								"delete-by-governor",
+								"123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Group by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:22600/cities/group-by-id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "22600",
+							"path": [
+								"cities",
+								"group-by-id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Count by climate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:22600/cities/count-by-climate/TROPICAL_SAVANNA",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "22600",
+							"path": [
+								"cities",
+								"count-by-climate",
+								"TROPICAL_SAVANNA"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "genocide",
+			"item": [
+				{
+					"name": "Count population in 3 cities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:22700/genocide/count/1/2/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "22700",
+							"path": [
+								"genocide",
+								"count",
+								"1",
+								"2",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Move to poorest",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:22700/genocide/move-to-poorest/123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "22700",
+							"path": [
+								"genocide",
+								"move-to-poorest",
+								"123"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

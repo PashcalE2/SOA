@@ -12,11 +12,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3e6a6a39-bc4a-48ae-b75c-7944f46153f6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entity/model/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/model/City.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/exception/CannotCheckException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/exception/NoSuchFieldNameException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/resource/CityResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/resource/CityResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/CityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/CityService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +76,8 @@
       <workItem from="1729531573299" duration="10689000" />
       <workItem from="1729597967973" duration="1110000" />
       <workItem from="1729668757872" duration="3036000" />
-      <workItem from="1729683821013" duration="9265000" />
+      <workItem from="1729683821013" duration="11400000" />
+      <workItem from="1729697523128" duration="1137000" />
     </task>
     <servers />
   </component>
