@@ -2,6 +2,7 @@ package model;
 
 import exception.CannotCheckException;
 import exception.NoSuchFieldNameException;
+import jakarta.ws.rs.core.Response;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -87,7 +88,7 @@ public class City {
 
             case "coordinates":
             case "governor":
-                throw new CannotCheckException();
+                throw new CannotCheckException(String.format("Нельзя сравнивать по полю %s", field));
 
             default: throw new NoSuchFieldNameException(City.class.getName(), field);
         }

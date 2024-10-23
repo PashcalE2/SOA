@@ -1,11 +1,14 @@
 package resource;
 
+import exception.AppException;
 import lombok.extern.slf4j.Slf4j;
 import model.*;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import model.repository.CityRepository;
+
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -25,7 +28,7 @@ public class CityResource {
             @PathParam("sort-order") String sortOrder,
             @PathParam("page") Integer page,
             @PathParam("size") Integer size
-    ) {
+    ) throws AppException {
         List<City> citiesList = new ArrayList<>(cityRepository.findAll());
 
         log.info("Filter fields: {}", filterFields);
@@ -35,7 +38,7 @@ public class CityResource {
             String[] filterValuesArray = filterValues.split(",");
 
             if (filterFieldsArray.length != filterValuesArray.length) {
-                return Response.status(Response.Status.BAD_REQUEST).build(); // TODO: status
+                throw new AppException(Response.Status.BAD_REQUEST, "Количество полей для фильтрации не совпадает с количеством значений"); // TODO: status
             }
 
             citiesList.removeIf((city) -> {

@@ -1,6 +1,7 @@
-package model;
+package model.repository;
 
 import lombok.extern.slf4j.Slf4j;
+import model.City;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;

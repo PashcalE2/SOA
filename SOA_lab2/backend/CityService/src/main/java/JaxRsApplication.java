@@ -1,8 +1,10 @@
 import filter.CORSFilter;
+import resource.AppExceptionMapper;
 import resource.CityResource;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +15,7 @@ public class JaxRsApplication extends Application {
     public JaxRsApplication() {
         classes.add(CityResource.class);
         classes.add(CORSFilter.class);
+        classes.add(AppExceptionMapper.class);
     }
 
     @Override
