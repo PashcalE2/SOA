@@ -11,8 +11,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e6a6a39-bc4a-48ae-b75c-7944f46153f6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/controller/PopulationController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/filter/CORSFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/filter/CORSFilter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,17 +43,22 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "17",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "vue.rearranger.settings.migration": "true"
   }
@@ -79,11 +84,14 @@
       <workItem from="1729597967973" duration="1110000" />
       <workItem from="1729668757872" duration="3036000" />
       <workItem from="1729683821013" duration="11400000" />
-      <workItem from="1729697523128" duration="9510000" />
+      <workItem from="1729697523128" duration="12721000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>
