@@ -1,4 +1,4 @@
-package model;
+package entity.dto;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@XmlRootElement(name = "cities")
-public class CitiesList {
-    private List<City> city;
+@XmlRootElement
+public class GroupsById {
+    private List<GroupById> groups;
 }

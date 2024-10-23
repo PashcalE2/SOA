@@ -1,4 +1,4 @@
-package model;
+package entity.model;
 
 public enum Climate {
     TROPICAL_SAVANNA,

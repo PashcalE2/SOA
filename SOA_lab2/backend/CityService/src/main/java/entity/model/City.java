@@ -1,8 +1,7 @@
-package model;
+package entity.model;
 
 import exception.CannotCheckException;
 import exception.NoSuchFieldNameException;
-import jakarta.ws.rs.core.Response;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +10,6 @@ import lombok.Setter;
 
 import java.time.Instant;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 @NoArgsConstructor

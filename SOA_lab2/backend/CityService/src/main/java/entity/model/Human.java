@@ -1,4 +1,4 @@
-package model;
+package entity.model;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
