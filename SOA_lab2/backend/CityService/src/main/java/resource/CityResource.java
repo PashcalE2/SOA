@@ -35,6 +35,18 @@ public class CityResource {
         return Response.ok().entity(new CitiesList(citiesList)).build();
     }
 
+    @GET
+    @Path("/all/{sort-fields}/{sort-order}/{page}/{size}")
+    public Response get(
+            @PathParam("sort-fields") String sortFields,
+            @PathParam("sort-order") SortOrder sortOrder,
+            @PathParam("page") Integer page,
+            @PathParam("size") Integer size
+    ) throws AppException {
+        List<City> citiesList = cityService.get(sortFields, sortOrder, page, size);
+        return Response.ok().entity(new CitiesList(citiesList)).build();
+    }
+
     @POST
     public Response add(City city) throws AppException {
         city = cityService.add(city);

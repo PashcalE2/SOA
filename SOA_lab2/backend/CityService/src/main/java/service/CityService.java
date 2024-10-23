@@ -11,13 +11,11 @@ import entity.model.City;
 import entity.model.Climate;
 import entity.repository.CityRepository;
 
-import java.lang.reflect.Field;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 @Slf4j
@@ -26,60 +24,17 @@ public class CityService {
 
     public List<City> get(String filterFields, String filterValues, String sortFields, SortOrder sortOrder, Integer page, Integer size) throws AppException {
         List<City> citiesList = new ArrayList<>(cityRepository.findAll());
+        filter(citiesList, filterFields, filterValues);
+        sort(citiesList, sortFields, sortOrder);
+        paginate(citiesList, page, size);
 
-        // Фильтрация
-        String[] filterFieldsArray = filterFields.split(",");
-        String[] filterValuesArray = filterValues.split(",");
-        if (filterFieldsArray.length != filterValuesArray.length) {
-            throw new AppException(Response.Status.BAD_REQUEST, "Количество полей для фильтрации не совпадает с количеством значений"); // TODO: status
-        }
+        return citiesList;
+    }
 
-        boolean hasInvalidField = !Arrays.stream(filterFieldsArray)
-                .allMatch(name -> Stream.of(City.class.getDeclaredFields())
-                        .map(Field::getName)
-                        .anyMatch(n -> n.equals(name)));
-
-        if (hasInvalidField) {
-            throw new AppException(Response.Status.BAD_REQUEST, "Названия полей в фильтре не совпадают с полями сущности");
-        }
-
-        citiesList.removeIf((city) -> {
-            for (int i = 0; i < filterFieldsArray.length; i++) {
-                try {
-                    if (!city.fieldEquals(filterFieldsArray[i], filterValuesArray[i])) {
-                        return true;
-                    }
-                }
-                catch (Exception ignored) {}
-            }
-            return false;
-        });
-
-        // Сортировка
-        citiesList.sort((city1, city2) -> {
-            for (String field : sortFields.split(",")) {
-                try {
-                    int compare = city1.compareBy(city2, field);
-                    if (compare != 0) {
-                        return sortOrder.equals(SortOrder.DESCENDING) ? -compare : compare;
-                    }
-                }
-                catch (Exception ignored) {}
-            }
-            return 0;
-        });
-
-        // Разделение на страницы
-        if (page < 0 || size < 0) {
-            throw new AppException(Response.Status.BAD_REQUEST, "Номер и размер страницы должны быть больше 0");
-        }
-
-        int citiesCount = citiesList.size();
-        int start = Math.min(page * size, citiesCount);
-        int end = Math.min((page + 1) * size, citiesCount);
-        citiesList = citiesList.subList(start, end);
-
-        log.info("Итого: {}", citiesList.size());
+    public List<City> get(String sortFields, SortOrder sortOrder, Integer page, Integer size) throws AppException {
+        List<City> citiesList = new ArrayList<>(cityRepository.findAll());
+        sort(citiesList, sortFields, sortOrder);
+        paginate(citiesList, page, size);
 
         return citiesList;
     }
@@ -127,6 +82,56 @@ public class CityService {
 
     public Count countByClimate(Climate climate) {
         return new Count(cityRepository.findAll().stream().filter(city -> city.getClimate().equals(climate)).count());
+    }
+
+    private void filter(List<City> citiesList, String filterFields, String filterValues) throws AppException {
+        String[] filterFieldsArray = filterFields.split(",");
+        String[] filterValuesArray = filterValues.split(",");
+        if (filterFieldsArray.length != filterValuesArray.length) {
+            throw new AppException(Response.Status.BAD_REQUEST, "Количество полей для фильтрации не совпадает с количеством значений"); // TODO: status
+        }
+
+        try {
+            citiesList.removeIf((city) -> {
+                for (int i = 0; i < filterFieldsArray.length; i++) {
+                    if (!city.fieldEquals(filterFieldsArray[i], filterValuesArray[i])) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        }
+        catch (IllegalArgumentException | DateTimeParseException e) {
+            throw new AppException(Response.Status.BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    private void sort(List<City> citiesList, String sortFields, SortOrder sortOrder) throws AppException {
+        try {
+            citiesList.sort((city1, city2) -> {
+                for (String field : sortFields.split(",")) {
+                    int compare = city1.compareBy(city2, field);
+                    if (compare != 0) {
+                        return sortOrder.equals(SortOrder.DESCENDING) ? -compare : compare;
+                    }
+                }
+                return 0;
+            });
+        }
+        catch (IllegalArgumentException e) {
+            throw new AppException(Response.Status.BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    private void paginate(List<City> citiesList, Integer page, Integer size) throws AppException {
+        if (page < 0 || size < 0) {
+            throw new AppException(Response.Status.BAD_REQUEST, "Номер и размер страницы должны быть больше 0");
+        }
+
+        int citiesCount = citiesList.size();
+        int start = Math.min(page * size, citiesCount);
+        int end = Math.min((page + 1) * size, citiesCount);
+        citiesList = citiesList.subList(start, end);
     }
 }
 

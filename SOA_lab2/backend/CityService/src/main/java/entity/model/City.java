@@ -1,7 +1,5 @@
 package entity.model;
 
-import exception.CannotCheckException;
-import exception.NoSuchFieldNameException;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -54,7 +52,7 @@ public class City {
                 && governor != null;
     }
 
-    public int compareBy(City o, String field) throws NoSuchFieldNameException {
+    public int compareBy(City o, String field) {
         switch (field) {
             case "id": return id.compareTo(o.id);
             case "name": return name.compareTo(o.name);
@@ -68,11 +66,11 @@ public class City {
             case "climate": return climate.compareTo(o.climate);
             case "governor": return governor.compareTo(o.governor);
 
-            default: throw new NoSuchFieldNameException(City.class.getName(), field);
+            default: throw new IllegalArgumentException(String.format("В классе %s нет поля %s", City.class.getName(), field));
         }
     }
 
-    public boolean fieldEquals(String field, String o) throws CannotCheckException, NoSuchFieldNameException {
+    public boolean fieldEquals(String field, String o) {
         switch (field) {
             case "id": return id.equals(Long.parseLong(o));
             case "name": return name.equals(o);
@@ -86,9 +84,9 @@ public class City {
 
             case "coordinates":
             case "governor":
-                throw new CannotCheckException(String.format("Нельзя сравнивать по полю %s", field));
+                throw new IllegalArgumentException(String.format("Нельзя сравнивать по полю %s", field));
 
-            default: throw new NoSuchFieldNameException(City.class.getName(), field);
+            default: throw new IllegalArgumentException(String.format("В классе %s нет поля %s", City.class.getName(), field));
         }
     }
 }
