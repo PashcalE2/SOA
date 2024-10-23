@@ -24,10 +24,10 @@
       </div>
     </div>
 
-    <!-- Governor ID Deletion Section -->
+    <!-- Governor name Deletion Section -->
     <div class="governor-container">
-      <label>Governor ID to Delete:</label>
-      <input v-model="governorId" type="number" placeholder="Governor ID" />
+      <label>Governor name to Delete:</label>
+      <input v-model="governorName" placeholder="Governor name" />
       <button @click="deleteCitiesByGovernor">Delete Cities by Governor</button>
     </div>
 
@@ -108,7 +108,7 @@ export default {
       sortOrder: 'asc',
       page: 1,
       size: 10,
-      governorId: null, // Governor ID for deletion
+      governorName: null, // Governor ID for deletion
       climate: '', // Climate for counting cities
     };
   },
@@ -120,34 +120,33 @@ export default {
           this.handleError(response.status);
           return;
         }
-        const data = await response.json();
-        this.cities = data;
+        this.cities = await response.json();
       } catch (error) {
         alert("An unexpected error occurred: " + error.message);
       }
     },
-    applyFilter() {
+    async applyFilter() {
       this.page = 1;
-      this.getCities();
+      await this.getCities();
     },
-    sortCities() {
+    async sortCities() {
       this.page = 1;
-      this.getCities();
+      await this.getCities();
     },
     async deleteCitiesByGovernor() {
-      if (!this.governorId) {
+      if (!this.governorName) {
         alert("Please enter a valid Governor ID.");
         return;
       }
 
       try {
-        const response = await fetch(`/cities/delete-by-governor/${this.governorId}`, { method: 'DELETE' });
+        const response = await fetch(`/cities/delete-by-governor/${this.governorName}`, { method: 'DELETE' });
         if (!response.ok) {
           this.handleError(response.status);
           return;
         }
         alert("Cities successfully deleted.");
-        this.getCities();
+        await this.getCities();
       } catch (error) {
         alert("An unexpected error occurred: " + error.message);
       }
@@ -183,6 +182,19 @@ export default {
         alert("An unexpected error occurred: " + error.message);
       }
     },
+    async deleteCity(id) {
+      try {
+        const response = await fetch(`/cities/${id}`, { method: 'DELETE' });
+        if (!response.ok) {
+          this.handleError(response.status);
+          return;
+        }
+        alert(`City with ID ${id} deleted.`);
+        await this.getCities();
+      } catch (error) {
+        alert("An unexpected error occurred: " + error.message);
+      }
+    },
     handleError(status) {
       switch (status) {
         case 400:
@@ -207,32 +219,24 @@ export default {
           alert("An unknown error occurred.");
       }
     },
-    editCity(id) {
-      this.$router.push(`/edit-city/${id}`);
+    async editCity(id) {
+      await this.$router.push(`/edit-city/${id}`);
     },
-    nextPage() {
+    async nextPage() {
       this.page++;
-      this.getCities();
+      await this.getCities();
     },
-    previousPage() {
+    async previousPage() {
       this.page--;
-      this.getCities();
+      await this.getCities();
     },
-    sort(field) {
+    async sort(field) {
       this.sortFields = field;
-      this.getCities();
+      await this.getCities();
     }
   }
 };
 </script>
 
 <style scoped>
-.success {
-  background-color: #4CAF50;
-  color: white;
-}
-.error {
-  background-color: #f44336;
-  color: white;
-}
 </style>
