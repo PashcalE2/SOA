@@ -24,10 +24,10 @@
       </div>
     </div>
 
-    <!-- Governor ID Deletion Section -->
+    <!-- Governor name Deletion Section -->
     <div class="governor-container">
-      <label>Governor ID to Delete:</label>
-      <input v-model="governorId" type="number" placeholder="Governor ID" />
+      <label>Governor name to Delete:</label>
+      <input v-model="governorName" placeholder="Governor name" />
       <button @click="deleteCitiesByGovernor">Delete Cities by Governor</button>
     </div>
 
@@ -108,7 +108,7 @@ export default {
       sortOrder: 'asc',
       page: 1,
       size: 10,
-      governorId: null, // Governor ID for deletion
+      governorName: null, // Governor ID for deletion
       climate: '', // Climate for counting cities
     };
   },
@@ -135,13 +135,13 @@ export default {
       this.getCities();
     },
     async deleteCitiesByGovernor() {
-      if (!this.governorId) {
+      if (!this.governorName) {
         alert("Please enter a valid Governor ID.");
         return;
       }
 
       try {
-        const response = await fetch(`/cities/delete-by-governor/${this.governorId}`, { method: 'DELETE' });
+        const response = await fetch(`/cities/delete-by-governor/${this.governorName}`, { method: 'DELETE' });
         if (!response.ok) {
           this.handleError(response.status);
           return;
