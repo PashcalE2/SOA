@@ -1,6 +1,6 @@
 package main.entity.model;
 
-import jakarta.xml.bind.annotation.XmlRootElement;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@XmlRootElement
+@JacksonXmlRootElement(localName = "human")
 public class Human implements Comparable<Human> {
     private String name; //Поле не может быть null, Строка не может быть пустой
     private long age; //Значение поля должно быть больше 0

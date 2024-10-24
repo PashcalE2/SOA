@@ -1,4 +1,4 @@
-package exception;
+package entity.dto;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;

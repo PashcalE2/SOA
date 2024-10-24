@@ -1,28 +1,28 @@
 package main.entity.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
-import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.time.ZonedDateTime;
 import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@XmlRootElement
+@JacksonXmlRootElement(localName = "city")
 public class City {
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
     @JsonSerialize(using = InstantSerializer.class)
-    private ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    private Date creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private long area; //Значение поля должно быть больше 0
     private int population; //Значение поля должно быть больше 0
     private Integer metersAboveSeaLevel;
@@ -31,6 +31,7 @@ public class City {
     private Climate climate; //Поле может быть null
     private Human governor; //Поле может быть null
 
+    @JsonIgnore
     public boolean isValid() {
         return
                 id != null && id > 0
@@ -44,6 +45,7 @@ public class City {
                 && governor != null;
     }
 
+    @JsonIgnore
     public boolean isValidRequest() {
         return
                 name != null && !name.isEmpty()
@@ -55,6 +57,7 @@ public class City {
                 && governor != null;
     }
 
+    @JsonIgnore
     public int compareBy(City o, String field) {
         switch (field) {
             case "id": return id.compareTo(o.id);
@@ -73,11 +76,12 @@ public class City {
         }
     }
 
+    @JsonIgnore
     public boolean fieldEquals(String field, String o) {
         switch (field) {
             case "id": return id.equals(Long.parseLong(o));
             case "name": return name.equals(o);
-            case "creationDate": return creationDate.equals(ZonedDateTime.parse(o));
+            case "creationDate": return creationDate.equals(Date.from(Instant.parse(o)));
             case "area": return area == Long.parseLong(o);
             case "population": return population == Integer.parseInt(o);
             case "metersAboveSeaLevel": return metersAboveSeaLevel.equals(Integer.parseInt(o));
@@ -91,5 +95,13 @@ public class City {
 
             default: throw new IllegalArgumentException(String.format("В классе %s нет поля %s", City.class.getName(), field));
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        City city = (City) o;
+        return id.equals(city.id);
     }
 }
