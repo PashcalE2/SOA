@@ -11,7 +11,7 @@
     <groupId>main</groupId>
     <artifactId>SecondService</artifactId>
     <version>rolling</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>SecondService</name>
     <description>SecondService</description>
     <properties>
