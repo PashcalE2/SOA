@@ -1,7 +1,7 @@
 package resource;
 
-import entity.dto.CitiesList;
-import entity.model.SortOrder;
+import entity.dto.Cities;
+import entity.dto.SortOrder;
 import entity.model.City;
 import entity.model.Climate;
 import exception.AppException;
@@ -32,7 +32,7 @@ public class CityResource {
             @PathParam("size") Integer size
     ) throws AppException {
         List<City> citiesList = cityService.get(filterFields, filterValues, sortFields, sortOrder, page, size);
-        return Response.ok().entity(new CitiesList(citiesList)).build();
+        return Response.ok().entity(new Cities(citiesList)).build();
     }
 
     @GET
@@ -44,7 +44,7 @@ public class CityResource {
             @PathParam("size") Integer size
     ) throws AppException {
         List<City> citiesList = cityService.get(sortFields, sortOrder, page, size);
-        return Response.ok().entity(new CitiesList(citiesList)).build();
+        return Response.ok().entity(new Cities(citiesList)).build();
     }
 
     @POST

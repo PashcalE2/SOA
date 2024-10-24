@@ -3,7 +3,7 @@ package service;
 import entity.dto.Count;
 import entity.dto.GroupById;
 import entity.dto.GroupsById;
-import entity.model.SortOrder;
+import entity.dto.SortOrder;
 import exception.AppException;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;

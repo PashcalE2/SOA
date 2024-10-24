@@ -1,5 +1,6 @@
 package entity.dto;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,5 +13,6 @@ import lombok.Setter;
 @Setter
 @XmlRootElement
 public class Count {
+    @JacksonXmlElementWrapper(useWrapping = false)
     private Long value;
 }
