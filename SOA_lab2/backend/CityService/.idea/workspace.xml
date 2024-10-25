@@ -11,14 +11,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e6a6a39-bc4a-48ae-b75c-7944f46153f6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/entity/marshal/LocalDateAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/entity/marshal/ZonedDateTimeAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/entity/model/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/model/City.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entity/model/Coordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/model/Coordinates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entity/model/Human.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/model/Human.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/entity/repository/CityRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/repository/CityRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/CityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/CityService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/resource/CityResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/resource/CityResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/adapter/CityServiceAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/adapter/CityServiceAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/model/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/model/City.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -94,7 +91,7 @@
       <workItem from="1729697523128" duration="12721000" />
       <workItem from="1729768321610" duration="2374000" />
       <workItem from="1729780341961" duration="18100000" />
-      <workItem from="1729828823121" duration="2483000" />
+      <workItem from="1729828823121" duration="3863000" />
     </task>
     <servers />
   </component>

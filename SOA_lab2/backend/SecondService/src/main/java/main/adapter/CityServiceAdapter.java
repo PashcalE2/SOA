@@ -15,6 +15,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 
 
 @Slf4j
@@ -52,21 +53,26 @@ public class CityServiceAdapter {
                 .build();
 
         CompletableFuture<HttpResponse<String>> futureResponse = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+        City city = null;
+
         try { // TODO помогите
-            return futureResponse.thenApply(response -> {
+            city = futureResponse.thenApply(response -> {
+                if (response.statusCode() == HttpStatus.OK.value()) {
+                    return cityMapper.deserialize(response.body());
+                }
+
                 if (response.statusCode() == HttpStatus.NOT_FOUND.value()) {
                     throw new AppRuntimeException(HttpStatus.NOT_FOUND, String.format("Нет города с таким ID: %s", id));
                 }
 
-                return cityMapper.deserialize(response.body());
+                throw new AppRuntimeException(HttpStatus.INTERNAL_SERVER_ERROR, "Не обработан статус ответа от основного сервера");
             }).join();
         }
-        catch (AppRuntimeException e) {
-            throw new AppException(e.getStatus(), e.getMessage());
+        catch (CompletionException e) {
+            catchCompletionException(e);
         }
-        catch (RuntimeException e) {
-            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-        }
+
+        return city;
     }
 
     public CitiesList getAllSortedPaginated(String sortFields, SortOrder sortOrder, Integer page, Integer size) {
@@ -81,7 +87,7 @@ public class CityServiceAdapter {
         return futureResponse.thenApply(response -> citiesListMapper.deserialize(response.body())).join();
     }
 
-    public void putById(Long cityId, City city) throws JsonProcessingException, AppException {
+    public City putById(Long cityId, City city) throws JsonProcessingException, AppException {
         URI uri = URI.create(CitiesApi.PUT_BY_ID.buildUrl(cityId));
         HttpRequest request = HttpRequest
                 .newBuilder()
@@ -92,9 +98,14 @@ public class CityServiceAdapter {
                 .build();
 
         CompletableFuture<HttpResponse<String>> futureResponse = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+        City updatedCity = null;
 
         try {
-            futureResponse.thenApply(response -> {
+            updatedCity = futureResponse.thenApply(response -> {
+                if (response.statusCode() == HttpStatus.OK.value()) {
+                    return cityMapper.deserialize(response.body());
+                }
+
                 if (response.statusCode() == HttpStatus.NOT_FOUND.value()) {
                     throw new AppRuntimeException(HttpStatus.NOT_FOUND, String.format("Нет города с таким ID: %s", cityId));
                 }
@@ -103,15 +114,26 @@ public class CityServiceAdapter {
                     throw new AppRuntimeException(HttpStatus.BAD_REQUEST, "Плохой запрос");
                 }
 
-                //return cityMapper.deserialize(response.body());
-                return null;
+                throw new AppRuntimeException(HttpStatus.INTERNAL_SERVER_ERROR, "Не обработан статус ответа от основного сервера");
             }).join();
         }
-        catch (AppRuntimeException e) {
-            throw new AppException(e.getStatus(), e.getMessage());
+        catch (CompletionException e) {
+            catchCompletionException(e);
         }
-        catch (RuntimeException e) {
-            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+
+        return updatedCity;
+    }
+
+    private void catchCompletionException(CompletionException e) throws AppException {
+        try {
+            throw e.getCause();
+        }
+        catch (AppRuntimeException appRuntimeException) {
+            throw new AppException(appRuntimeException.getStatus(), appRuntimeException.getMessage());
+        }
+        catch(Throwable impossible) {
+            log.error(impossible.getMessage(), impossible);
+            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "Необработанное исключение");
         }
     }
 }

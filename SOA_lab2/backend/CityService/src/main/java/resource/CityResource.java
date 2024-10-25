@@ -63,6 +63,7 @@ public class CityResource {
     @Path("/{id}")
     public Response update(@PathParam("id") Long id, City city) throws AppException {
         city = cityService.updateCity(id, city);
+        log.info("Обновленный город: {}", city);
         return Response.ok().entity(city).build();
     }
 

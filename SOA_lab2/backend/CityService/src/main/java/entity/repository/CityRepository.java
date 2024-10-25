@@ -35,7 +35,8 @@ public class CityRepository {
         City old = cities.remove(id);
         city.setId(id);
         city.setCreationDate(old.getCreationDate());
-        return cities.put(id, city);
+        cities.put(id, city);
+        return city;
     }
 
     public void delete(Long id) throws AppException {

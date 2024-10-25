@@ -101,4 +101,11 @@ public class City {
         City city = (City) o;
         return id.equals(city.id);
     }
+
+    @Override
+    public String toString() {
+        return String.format("id: %s\nname: %s\ncoordinates: %s\ncreationDate: %s\narea: %s\npopulation: %s\n" +
+                "metersAboveSeaLevel: %s\nestablishmentDate: %s\ntelephoneCode: %s\nclimate: %s\ngovernor: %s",
+                id, name, coordinates, creationDate, area, population, metersAboveSeaLevel, establishmentDate, telephoneCode, climate, governor);
+    }
 }
