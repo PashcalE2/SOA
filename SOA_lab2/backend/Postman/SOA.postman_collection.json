@@ -15,7 +15,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:22600/cities/idы/2/id/ASCENDING/0/2",
+							"raw": "http://localhost:22600/cities/telephoneCode/1234/id/ASCENDING/0/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -23,8 +23,8 @@
 							"port": "22600",
 							"path": [
 								"cities",
-								"idы",
-								"2",
+								"telephoneCode",
+								"1234",
 								"id",
 								"ASCENDING",
 								"0",
@@ -40,18 +40,19 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:22600/cities/id/ASCENDING/0/2",
-							"protocol": "http",
+							"raw": "https://localhost:22601/cities/all/population/DESCENDING/0/100",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "22600",
+							"port": "22601",
 							"path": [
 								"cities",
-								"id",
-								"ASCENDING",
+								"all",
+								"population",
+								"DESCENDING",
 								"0",
-								"2"
+								"100"
 							]
 						}
 					},
@@ -69,7 +70,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "<city>\r\n\t<name>string</name>\r\n\t<coordinates>\r\n\t\t<x>0</x>\r\n\t\t<y>0</y>\r\n\t</coordinates>\r\n\t<area>1</area>\r\n\t<population>1</population>\r\n\t<metersAboveSeaLevel>0</metersAboveSeaLevel>\r\n\t<establishmentDate>2024-10-21</establishmentDate>\r\n\t<telephoneCode>100000</telephoneCode>\r\n\t<climate>TROPICAL_SAVANNA</climate>\r\n\t<governor>\r\n\t\t<name>string</name>\r\n\t\t<age>1</age>\r\n\t\t<height>1</height>\r\n\t</governor>\r\n</city>",
+							"raw": "<city>\r\n\t<name>string</name>\r\n\t<coordinates>\r\n\t\t<x>0</x>\r\n\t\t<y>0</y>\r\n\t</coordinates>\r\n\t<area>1</area>\r\n\t<population>4</population>\r\n\t<metersAboveSeaLevel>0</metersAboveSeaLevel>\r\n\t<establishmentDate>2024-10-21</establishmentDate>\r\n\t<telephoneCode>1234</telephoneCode>\r\n\t<climate>TROPICAL_SAVANNA</climate>\r\n\t<governor>\r\n\t\t<name>string</name>\r\n\t\t<age>1</age>\r\n\t\t<height>1</height>\r\n\t</governor>\r\n</city>",
 							"options": {
 								"raw": {
 									"language": "xml"
@@ -77,12 +78,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:22600/cities",
-							"protocol": "http",
+							"raw": "https://localhost:22601/cities",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "22600",
+							"port": "22601",
 							"path": [
 								"cities"
 							]
@@ -96,15 +97,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:22600/cities/123",
-							"protocol": "http",
+							"raw": "https://localhost:22601/cities/1",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "22600",
+							"port": "22601",
 							"path": [
 								"cities",
-								"123"
+								"1"
 							]
 						}
 					},
@@ -117,7 +118,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "<city>\r\n\t<name>string</name>\r\n\t<coordinates>\r\n\t\t<x>0</x>\r\n\t\t<y>0</y>\r\n\t</coordinates>\r\n\t<area>1</area>\r\n\t<population>1</population>\r\n\t<metersAboveSeaLevel>0</metersAboveSeaLevel>\r\n\t<establishmentDate>2024-10-21</establishmentDate>\r\n\t<telephoneCode>100000</telephoneCode>\r\n\t<climate>SUBARCTIC</climate>\r\n\t<governor>\r\n\t\t<name>string</name>\r\n\t\t<age>1</age>\r\n\t\t<height>1</height>\r\n\t</governor>\r\n</city>",
+							"raw": "<city>\r\n\t<name>string</name>\r\n\t<coordinates>\r\n\t\t<x>0</x>\r\n\t\t<y>0</y>\r\n\t</coordinates>\r\n\t<area>1</area>\r\n\t<population>5</population>\r\n\t<metersAboveSeaLevel>0</metersAboveSeaLevel>\r\n\t<establishmentDate>2024-10-21</establishmentDate>\r\n\t<telephoneCode>100000</telephoneCode>\r\n\t<climate>SUBARCTIC</climate>\r\n\t<governor>\r\n\t\t<name>string</name>\r\n\t\t<age>1</age>\r\n\t\t<height>1</height>\r\n\t</governor>\r\n</city>",
 							"options": {
 								"raw": {
 									"language": "xml"
@@ -125,12 +126,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:22600/cities/1",
-							"protocol": "http",
+							"raw": "https://localhost:22601/cities/1",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "22600",
+							"port": "22601",
 							"path": [
 								"cities",
 								"1"
@@ -145,12 +146,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:22600/cities/123",
-							"protocol": "http",
+							"raw": "https://localhost:22601/cities/123",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "22600",
+							"port": "22601",
 							"path": [
 								"cities",
 								"123"
@@ -206,12 +207,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:22600/cities/count-by-climate/TROPICAL_SAVANNA",
-							"protocol": "http",
+							"raw": "https://localhost:22601/cities/count-by-climate/TROPICAL_SAVANNA",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "22600",
+							"port": "22601",
 							"path": [
 								"cities",
 								"count-by-climate",
@@ -232,18 +233,18 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:22700/genocide/count/1/2/3",
-							"protocol": "http",
+							"raw": "https://localhost:22701/genocide/count/2/2/2",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "22700",
+							"port": "22701",
 							"path": [
 								"genocide",
 								"count",
-								"1",
 								"2",
-								"3"
+								"2",
+								"2"
 							]
 						}
 					},
@@ -255,16 +256,16 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:22700/genocide/move-to-poorest/123",
-							"protocol": "http",
+							"raw": "https://localhost:22701/genocide/move-to-poorest/1",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "22700",
+							"port": "22701",
 							"path": [
 								"genocide",
 								"move-to-poorest",
-								"123"
+								"1"
 							]
 						}
 					},
