@@ -6,8 +6,10 @@ import main.entity.dto.SortOrder;
 import main.entity.model.City;
 import main.exception.AppException;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 
 
+@Component
 @Slf4j
 public class PopulationService {
     private final CityServiceAdapter cityServiceAdapter = new CityServiceAdapter();

@@ -26,7 +26,7 @@ public class CityService {
         List<City> citiesList = new ArrayList<>(cityRepository.findAll());
         filter(citiesList, filterFields, filterValues);
         sort(citiesList, sortFields, sortOrder);
-        paginate(citiesList, page, size);
+        citiesList = paginate(citiesList, page, size);
 
         return citiesList;
     }
@@ -34,7 +34,7 @@ public class CityService {
     public List<City> get(String sortFields, SortOrder sortOrder, Integer page, Integer size) throws AppException {
         List<City> citiesList = new ArrayList<>(cityRepository.findAll());
         sort(citiesList, sortFields, sortOrder);
-        paginate(citiesList, page, size);
+        citiesList = paginate(citiesList, page, size);
 
         return citiesList;
     }
@@ -76,7 +76,7 @@ public class CityService {
     public void deleteByGovernor(String governorName) throws AppException {
         log.info("Удаление по губернатору: {}", governorName);
         if (!cityRepository.deleteByGovernor(governorName)) {
-            throw new AppException(Response.Status.NOT_ACCEPTABLE, "Нет городов с таким губернатором");
+            throw new AppException(Response.Status.CONFLICT, "Нет городов с таким губернатором");
         }
     }
 
@@ -92,7 +92,7 @@ public class CityService {
         String[] filterFieldsArray = filterFields.split(",");
         String[] filterValuesArray = filterValues.split(",");
         if (filterFieldsArray.length != filterValuesArray.length) {
-            throw new AppException(Response.Status.BAD_REQUEST, "Количество полей для фильтрации не совпадает с количеством значений"); // TODO: status
+            throw new AppException(Response.Status.NOT_ACCEPTABLE, "Количество полей для фильтрации не совпадает с количеством значений");
         }
 
         try {
@@ -106,7 +106,7 @@ public class CityService {
             });
         }
         catch (IllegalArgumentException | DateTimeParseException e) {
-            throw new AppException(Response.Status.BAD_REQUEST, e.getMessage());
+            throw new AppException(Response.Status.NOT_ACCEPTABLE, e.getMessage());
         }
     }
 
@@ -123,19 +123,19 @@ public class CityService {
             });
         }
         catch (IllegalArgumentException e) {
-            throw new AppException(Response.Status.BAD_REQUEST, e.getMessage());
+            throw new AppException(Response.Status.NOT_ACCEPTABLE, e.getMessage());
         }
     }
 
-    private void paginate(List<City> citiesList, Integer page, Integer size) throws AppException {
+    private List<City> paginate(List<City> citiesList, Integer page, Integer size) throws AppException {
         if (page < 0 || size < 0) {
-            throw new AppException(Response.Status.BAD_REQUEST, "Номер и размер страницы должны быть больше 0");
+            throw new AppException(Response.Status.NOT_ACCEPTABLE, "Номер и размер страницы должны быть больше 0");
         }
 
         int citiesCount = citiesList.size();
         int start = Math.min(page * size, citiesCount);
         int end = Math.min((page + 1) * size, citiesCount);
-        citiesList = citiesList.subList(start, end);
+        return citiesList.subList(start, end);
     }
 }
 

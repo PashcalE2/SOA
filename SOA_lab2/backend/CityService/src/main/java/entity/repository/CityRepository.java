@@ -1,5 +1,6 @@
 package entity.repository;
 
+import entity.model.Human;
 import exception.AppException;
 import jakarta.ws.rs.core.Response;
 import lombok.NoArgsConstructor;
@@ -45,7 +46,14 @@ public class CityRepository {
         }
     }
 
-    public boolean deleteByGovernor(String governorName) {
+    public boolean deleteByGovernor(String governorName) throws AppException {
+        Human governor = findAll()
+                .stream()
+                .filter(city -> city.getGovernor().getName().equals(governorName))
+                .findFirst()
+                .map(City::getGovernor)
+                .orElseThrow(() -> new AppException(Response.Status.NOT_FOUND, String.format("Губернатор с таким именем не найден: %s", governorName)));
+
         List<Long> citiesToDelete = new ArrayList<>();
         for (City city : cities.values()) {
             if (city.getGovernor().getName().equals(governorName)) {

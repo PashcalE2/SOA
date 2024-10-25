@@ -1,5 +1,6 @@
 package main.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import main.entity.dto.Count;
 import main.exception.AppException;
@@ -10,9 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/genocide")
+@AllArgsConstructor
 @Slf4j
 public class PopulationController {
-    private final PopulationService populationService = new PopulationService();
+    private final PopulationService populationService;
 
     @GetMapping("/count/{id1}/{id2}/{id3}")
     public ResponseEntity<?> countPopulation(@PathVariable Long id1, @PathVariable Long id2, @PathVariable Long id3) throws AppException {

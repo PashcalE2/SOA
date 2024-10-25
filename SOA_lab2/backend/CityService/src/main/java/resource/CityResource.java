@@ -71,14 +71,14 @@ public class CityResource {
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) throws AppException {
         cityService.deleteCity(id);
-        return Response.ok().build();
+        return Response.noContent().build();
     }
 
     @DELETE
     @Path("/delete-by-governor/{name}")
     public Response deleteByGovernor(@PathParam("name") String name) throws AppException {
         cityService.deleteByGovernor(name);
-        return Response.ok().build();
+        return Response.noContent().build();
     }
 
     @GET

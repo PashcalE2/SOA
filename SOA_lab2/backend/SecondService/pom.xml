@@ -11,7 +11,7 @@
     <groupId>main</groupId>
     <artifactId>SecondService</artifactId>
     <version>rolling</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>SecondService</name>
     <description>SecondService</description>
     <properties>
@@ -22,6 +22,27 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>tomcat-embed-el</artifactId>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>tomcat-embed-core</artifactId>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>tomcat-embed-websocket</artifactId>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jetty -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
+            <version>3.2.3</version>
         </dependency>
 
         <dependency>
@@ -72,7 +93,7 @@
                     </excludes>
                 </configuration>
             </plugin>
-
+            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -81,6 +102,7 @@
                     <webXml>src/main/webapp/WEB-INF/spring-servlet.xml</webXml>
                 </configuration>
             </plugin>
+            -->
         </plugins>
 
         <finalName>ROOT</finalName>
