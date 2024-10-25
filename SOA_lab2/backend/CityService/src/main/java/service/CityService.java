@@ -3,7 +3,7 @@ package service;
 import entity.dto.Count;
 import entity.dto.GroupById;
 import entity.dto.GroupsById;
-import entity.model.SortOrder;
+import entity.dto.SortOrder;
 import exception.AppException;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -11,9 +11,11 @@ import entity.model.City;
 import entity.model.Climate;
 import entity.repository.CityRepository;
 
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,7 +46,7 @@ public class CityService {
             throw new AppException(Response.Status.BAD_REQUEST, "Неправильные поля / значения");
         }
 
-        city.setCreationDate(ZonedDateTime.now());
+        city.setCreationDate(Date.from(Instant.now()));
         cityRepository.add(city);
 
         return city;

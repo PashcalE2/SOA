@@ -11,7 +11,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e6a6a39-bc4a-48ae-b75c-7944f46153f6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/adapter/XmlMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/controller/DefaultAdvice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/dto/CitiesList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/exception/AppException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/exception/AppRuntimeException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entity/dto/Count.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/dto/Count.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entity/model/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/model/City.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entity/repository/CityRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/repository/CityRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exception/Error.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/dto/Error.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/resource/AppExceptionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/resource/AppExceptionMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/resource/CityResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/resource/CityResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/CityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/CityService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/adapter/CityServiceAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/adapter/CityServiceAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/adapter/XmlDeserializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/controller/PopulationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/controller/PopulationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/dto/Cities.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/dto/Error.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/dto/Count.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/dto/Count.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/model/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/model/City.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/model/Coordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/model/Coordinates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/model/Human.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/model/Human.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/service/PopulationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/service/PopulationService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,17 +63,23 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -77,11 +104,16 @@
       <workItem from="1729597967973" duration="1110000" />
       <workItem from="1729668757872" duration="3036000" />
       <workItem from="1729683821013" duration="11400000" />
-      <workItem from="1729697523128" duration="1137000" />
+      <workItem from="1729697523128" duration="12721000" />
+      <workItem from="1729768321610" duration="2374000" />
+      <workItem from="1729780341961" duration="17876000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

@@ -1,19 +1,17 @@
-package entity.dto;
+package main.entity.dto;
 
-import entity.model.City;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@XmlRootElement(name = "cities")
-public class CitiesList {
-    private List<City> city;
+@JacksonXmlRootElement(localName = "error")
+public class Error {
+    private String message;
 }

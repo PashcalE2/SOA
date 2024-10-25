@@ -34,7 +34,9 @@ public class CityRepository {
 
     public City update(Long id, City city) {
         city.setId(id);
-        return cities.replace(id, city);
+        cities.remove(id);
+        log.info("Удален город: {}", id);
+        return cities.put(id, city);
     }
 
     public void delete(Long id) throws AppException {
