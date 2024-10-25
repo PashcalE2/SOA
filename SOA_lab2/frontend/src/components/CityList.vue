@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Cities</h1>
-
+    <router-link to="/second-service" class="router-link route">Go to Second Service</router-link>
     <!-- Filter and Sort Section -->
     <div class="filter-sort-container">
       <div class="filter-container">
