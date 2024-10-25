@@ -125,3 +125,21 @@ tr:nth-child(even) {
 .router-link:hover {
     background-color: #218838;
 }
+
+.router-link.route {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: inline-block;
+    color: white;
+    background-color: #6a0dad;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.router-link.route:hover {
+    background-color: #5c0ba9;
+}
