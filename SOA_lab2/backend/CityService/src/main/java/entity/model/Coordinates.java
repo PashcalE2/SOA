@@ -1,5 +1,7 @@
 package entity.model;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +14,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 @Getter
 @Setter
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Coordinates implements Comparable<Coordinates> {
     private Float x; //Поле не может быть null
     private double y;

@@ -11,11 +11,9 @@ import entity.model.City;
 import entity.model.Climate;
 import entity.repository.CityRepository;
 
-import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,11 +40,12 @@ public class CityService {
     }
 
     public City add(City city) throws AppException {
+        log.info("Добавление города: {}", city);
         if (!city.isValidRequest()) {
             throw new AppException(Response.Status.BAD_REQUEST, "Неправильные поля / значения");
         }
 
-        city.setCreationDate(Date.from(Instant.now()));
+        city.setCreationDate(ZonedDateTime.now().withSecond(0).withNano(0));
         cityRepository.add(city);
 
         return city;
@@ -61,6 +60,7 @@ public class CityService {
     }
 
     public City updateCity(Long id, City city) throws AppException {
+        log.info("Обновление города: {}", id);
         if (!city.isValidRequest()) {
             throw new AppException(Response.Status.BAD_REQUEST, "Неправильные поля / значения");
         }
@@ -69,10 +69,12 @@ public class CityService {
     }
 
     public void deleteCity(Long id) throws AppException {
+        log.info("Удаление города: {}", id);
         cityRepository.delete(id);
     }
 
     public void deleteByGovernor(String governorName) throws AppException {
+        log.info("Удаление по губернатору: {}", governorName);
         if (!cityRepository.deleteByGovernor(governorName)) {
             throw new AppException(Response.Status.NOT_ACCEPTABLE, "Нет городов с таким губернатором");
         }

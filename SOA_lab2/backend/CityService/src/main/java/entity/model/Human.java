@@ -1,5 +1,7 @@
 package entity.model;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Human implements Comparable<Human> {
     private String name; //Поле не может быть null, Строка не может быть пустой
     private long age; //Значение поля должно быть больше 0

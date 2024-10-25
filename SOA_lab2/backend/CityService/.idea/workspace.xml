@@ -11,28 +11,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e6a6a39-bc4a-48ae-b75c-7944f46153f6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/adapter/XmlMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/controller/DefaultAdvice.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/dto/CitiesList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/exception/AppException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/exception/AppRuntimeException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/entity/marshal/LocalDateAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/entity/marshal/ZonedDateTimeAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entity/dto/Count.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/dto/Count.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/entity/model/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/model/City.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entity/model/Coordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/model/Coordinates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entity/model/Human.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/model/Human.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/entity/repository/CityRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/repository/CityRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/exception/Error.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/dto/Error.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/resource/AppExceptionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/resource/AppExceptionMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/resource/CityResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/resource/CityResource.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/CityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/CityService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/adapter/CityServiceAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/adapter/CityServiceAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/adapter/XmlDeserializer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/controller/PopulationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/controller/PopulationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/dto/Cities.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/dto/Error.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/dto/Count.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/dto/Count.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/model/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/model/City.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/model/Coordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/model/Coordinates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/model/Human.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/entity/model/Human.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SecondService/src/main/java/main/service/PopulationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SecondService/src/main/java/main/service/PopulationService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +93,8 @@
       <workItem from="1729683821013" duration="11400000" />
       <workItem from="1729697523128" duration="12721000" />
       <workItem from="1729768321610" duration="2374000" />
-      <workItem from="1729780341961" duration="17876000" />
+      <workItem from="1729780341961" duration="18100000" />
+      <workItem from="1729828823121" duration="2483000" />
     </task>
     <servers />
   </component>

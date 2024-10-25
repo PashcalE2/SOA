@@ -29,13 +29,12 @@ public class CityRepository {
         city.setId(id);
 
         cities.put(id, city);
-        log.info("Total cities now: {}", cities.size());
     }
 
     public City update(Long id, City city) {
+        City old = cities.remove(id);
         city.setId(id);
-        cities.remove(id);
-        log.info("Удален город: {}", id);
+        city.setCreationDate(old.getCreationDate());
         return cities.put(id, city);
     }
 
