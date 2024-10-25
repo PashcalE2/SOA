@@ -1,5 +1,6 @@
 package main.service;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import main.adapter.CityServiceAdapter;
 import main.entity.dto.SortOrder;
@@ -10,9 +11,10 @@ import org.springframework.stereotype.Component;
 
 
 @Component
+@AllArgsConstructor
 @Slf4j
 public class PopulationService {
-    private final CityServiceAdapter cityServiceAdapter = new CityServiceAdapter();
+    private final CityServiceAdapter cityServiceAdapter;
 
     public Long countPopulation(Long id1, Long id2, Long id3) throws AppException {
         City city1 = cityServiceAdapter.getById(id1);

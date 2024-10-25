@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class GenocideServiceApplication {
 
 	public static void main(String[] args) {
+		System.setProperty("javax.net.ssl.trustStore", "/home/studs/s311817/servers/jetty_service/wildfly.truststore");
 		SpringApplication.run(GenocideServiceApplication.class, args);
 	}
 

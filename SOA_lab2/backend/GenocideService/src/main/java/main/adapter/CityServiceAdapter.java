@@ -2,13 +2,17 @@ package main.adapter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import main.AppConfiguration;
 import main.entity.dto.CitiesList;
 import main.entity.dto.SortOrder;
 import main.entity.model.City;
 import main.exception.AppException;
 import main.exception.AppRuntimeException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -18,31 +22,14 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
 
+@Component
+@RequiredArgsConstructor
 @Slf4j
 public class CityServiceAdapter {
+    private final AppConfiguration appConfiguration;
     private final HttpClient client = HttpClient.newHttpClient();
     private final XmlMapper<City> cityMapper = new XmlMapper<>(City.class);
     private final XmlMapper<CitiesList> citiesListMapper = new XmlMapper<>(CitiesList.class);
-
-    public CityServiceAdapter() {
-        // TODO помогите
-        System.setProperty("javax.net.ssl.trustStore", "/home/studs/s311817/servers/jetty-home-12.0.14/base/etc/wildfly.truststore");
-    }
-
-    @AllArgsConstructor
-    public enum CitiesApi {
-        GET_ALL_SORTED_PAGINATED("/all/{sort-fields}/{sort-order}/{page}/{size}"),
-        GET_BY_ID("/{id}"),
-        PUT_BY_ID("/{id}");
-
-        // TODO помогите
-        private final static String baseUrl = "http://localhost:22600/cities";
-        private final String endpoint;
-
-        public String buildUrl(Object... args) {
-            return baseUrl + String.format(endpoint.replaceAll("(\\{[^}]+})", "%s"), args);
-        }
-    }
 
     public City getById(Long id) throws AppException {
         URI uri = URI.create(CitiesApi.GET_BY_ID.buildUrl(id));
