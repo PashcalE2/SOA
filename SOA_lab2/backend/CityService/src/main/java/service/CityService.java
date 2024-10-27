@@ -40,13 +40,14 @@ public class CityService {
     }
 
     public City add(City city) throws AppException {
-        log.info("Добавление города: {}", city);
+        log.info("Добавление города");
         if (!city.isValidRequest()) {
             throw new AppException(Response.Status.BAD_REQUEST, "Неправильные поля / значения");
         }
 
         city.setCreationDate(ZonedDateTime.now().withSecond(0).withNano(0));
         cityRepository.add(city);
+        log.info("Город добавлен:\n{}", city);
 
         return city;
     }

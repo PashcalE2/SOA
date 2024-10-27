@@ -32,7 +32,7 @@ public class CityServiceAdapter {
     private final XmlMapper<CitiesList> citiesListMapper = new XmlMapper<>(CitiesList.class);
 
     public City getById(Long id) throws AppException {
-        URI uri = URI.create(CitiesApi.GET_BY_ID.buildUrl(id));
+        URI uri = URI.create(CitiesApi.GET_BY_ID.buildUrl(appConfiguration.baseEndpoint, id));
         HttpRequest request = HttpRequest
                 .newBuilder()
                 .uri(uri)
@@ -63,7 +63,7 @@ public class CityServiceAdapter {
     }
 
     public CitiesList getAllSortedPaginated(String sortFields, SortOrder sortOrder, Integer page, Integer size) {
-        URI uri = URI.create(CitiesApi.GET_ALL_SORTED_PAGINATED.buildUrl(sortFields, sortOrder, page, size));
+        URI uri = URI.create(CitiesApi.GET_ALL_SORTED_PAGINATED.buildUrl(appConfiguration.baseEndpoint, sortFields, sortOrder, page, size));
         HttpRequest request = HttpRequest
                 .newBuilder()
                 .uri(uri)
@@ -75,7 +75,7 @@ public class CityServiceAdapter {
     }
 
     public City putById(Long cityId, City city) throws JsonProcessingException, AppException {
-        URI uri = URI.create(CitiesApi.PUT_BY_ID.buildUrl(cityId));
+        URI uri = URI.create(CitiesApi.PUT_BY_ID.buildUrl(appConfiguration.baseEndpoint, cityId));
         HttpRequest request = HttpRequest
                 .newBuilder()
                 .uri(uri)

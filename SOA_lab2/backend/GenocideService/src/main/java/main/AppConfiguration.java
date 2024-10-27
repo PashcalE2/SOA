@@ -10,5 +10,5 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 public class AppConfiguration {
     @Value("${cities.endpoint}")
-    public static String baseEndpoint;
+    public String baseEndpoint;
 }

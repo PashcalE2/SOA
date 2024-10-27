@@ -1,7 +1,9 @@
 package main.adapter;
 
+import lombok.AllArgsConstructor;
 import main.AppConfiguration;
 
+@AllArgsConstructor
 public enum CitiesApi {
     GET_ALL_SORTED_PAGINATED("/all/{sort-fields}/{sort-order}/{page}/{size}"),
     GET_BY_ID("/{id}"),
@@ -9,12 +11,7 @@ public enum CitiesApi {
 
     private final String endpoint;
 
-
-    CitiesApi(String endpoint) {
-        this.endpoint = endpoint;
-    }
-
-    public String buildUrl(Object... args) {
-        return AppConfiguration.baseEndpoint + String.format(endpoint.replaceAll("(\\{[^}]+})", "%s"), args);
+    public String buildUrl(String baseEndpoint, Object... args) {
+        return baseEndpoint + String.format(endpoint.replaceAll("(\\{[^}]+})", "%s"), args);
     }
 }

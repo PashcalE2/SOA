@@ -11,13 +11,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e6a6a39-bc4a-48ae-b75c-7944f46153f6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../GenocideService/scripts/certs.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../GenocideService/src/main/java/main/AppConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../GenocideService/src/main/java/main/adapter/CitiesApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../GenocideService/src/main/java/main/GenocideServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../GenocideService/src/main/java/main/GenocideServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/CityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/CityService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GenocideService/src/main/java/main/AppConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../GenocideService/src/main/java/main/AppConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GenocideService/src/main/java/main/adapter/CitiesApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/../GenocideService/src/main/java/main/adapter/CitiesApi.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../GenocideService/src/main/java/main/adapter/CityServiceAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../GenocideService/src/main/java/main/adapter/CityServiceAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../GenocideService/src/main/java/main/service/PopulationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../GenocideService/src/main/java/main/service/PopulationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../GenocideService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../GenocideService/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,13 +34,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
-  </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="useMavenConfig" value="true" />
-      </MavenGeneralSettings>
-    </option>
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
