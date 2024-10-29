@@ -37,9 +37,8 @@ public class XmlMapper<T> {
     private final String xmlHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
     public String serialize(T obj) {
         try {
-            String result = xmlHeader + mapper.writeValueAsString(obj);
-            log.info(result);
-            return result;
+            // log.info(result);
+            return xmlHeader + mapper.writeValueAsString(obj);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

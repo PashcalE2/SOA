@@ -42,7 +42,7 @@ public class CityServiceAdapter {
         CompletableFuture<HttpResponse<String>> futureResponse = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
         City city = null;
 
-        try { // TODO помогите
+        try {
             city = futureResponse.thenApply(response -> {
                 if (response.statusCode() == HttpStatus.OK.value()) {
                     return cityMapper.deserialize(response.body());
@@ -79,7 +79,6 @@ public class CityServiceAdapter {
         HttpRequest request = HttpRequest
                 .newBuilder()
                 .uri(uri)
-                // TODO помогите
                 .header("Content-Type", "application/xml")
                 .PUT(HttpRequest.BodyPublishers.ofString(cityMapper.serialize(city)))
                 .build();
