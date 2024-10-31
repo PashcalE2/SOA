@@ -11,17 +11,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e6a6a39-bc4a-48ae-b75c-7944f46153f6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/certs.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/certs.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../GenocideService/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../GenocideService/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../GenocideService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../GenocideService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/JaxRsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/JaxRsApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../GenocideService/src/main/java/main/GenocideServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../GenocideService/src/main/java/main/GenocideServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../GenocideService/src/main/java/main/adapter/CityServiceAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../GenocideService/src/main/java/main/adapter/CityServiceAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../GenocideService/src/main/java/main/adapter/XmlMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../GenocideService/src/main/java/main/adapter/XmlMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../GenocideService/src/main/java/main/entity/dto/Error.java" beforeDir="false" afterPath="$PROJECT_DIR$/../GenocideService/src/main/java/main/entity/dto/Error.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../GenocideService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../GenocideService/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,32 +42,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "jdk.selected.JAVA_MODULE": "17",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/311817/Desktop/itmo/4 year/SOA/SOA_lab2/backend/CityService/scripts",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/311817/Desktop/itmo/4 year/SOA/SOA_lab2/backend/CityService/scripts&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\311817\Desktop\itmo\4 year\SOA\SOA_lab2\backend\CityService\scripts" />
@@ -109,6 +101,7 @@
       <workItem from="1729842625479" duration="7428000" />
       <workItem from="1729857642663" duration="667000" />
       <workItem from="1730202957328" duration="5158000" />
+      <workItem from="1730300204357" duration="5379000" />
     </task>
     <servers />
   </component>

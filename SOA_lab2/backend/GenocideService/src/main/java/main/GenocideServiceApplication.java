@@ -15,9 +15,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 @Slf4j
 public class GenocideServiceApplication {
-
 	public static void main(String[] args) {
-		System.setProperty("javax.net.ssl.trustStore", "/home/studs/s311817/servers/jetty_service/jetty.truststore");
+		System.setProperty("javax.net.ssl.trustStore", "./jetty.truststore");
 		System.setProperty("javax.net.ssl.trustStorePassword", "secret");
 		System.setProperty("jsse.enableSNIExtension", "false");
 		SpringApplication.run(GenocideServiceApplication.class, args);
