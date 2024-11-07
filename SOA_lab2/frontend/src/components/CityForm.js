@@ -3,18 +3,21 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 function CityForm({ cityId }) {
-    const [city, setCity] = useState({
+    // Default values for city state
+    const defaultCity = {
         id: null,
         name: '',
-        coordinates: { x: null, y: null },
-        area: null,
-        population: null,
-        metersAboveSeaLevel: null,
-        establishmentDate: null,
-        telephoneCode: null,
-        climate: '',
-        governor: { name: '', age: null, height: null },
-    });
+        coordinates: { x: '', y: '' },
+        area: '',
+        population: '',
+        metersAboveSeaLevel: '',
+        establishmentDate: '',
+        telephoneCode: '',
+        climate: 'TROPICAL_SAVANNA', // Default climate
+        governor: { name: '', age: '', height: '' },
+    };
+
+    const [city, setCity] = useState(defaultCity);
     const [climates] = useState([
         'TROPICAL_SAVANNA',
         'HUMIDCONTINENTAL',
@@ -38,7 +41,12 @@ function CityForm({ cityId }) {
 
     const loadCity = async (id) => {
         try {
-            const response = await axios.get(`https://localhost:22601/cities/${id}`);
+            const response = await axios.get(`https://localhost:22601/cities/${id}`, {
+                headers: {
+                    'Accept': 'application/xml',
+                    'Content-Type': 'application/xml',
+                }
+            });
             setCity(response.data);
         } catch (error) {
             console.error("Error fetching city:", error);
@@ -53,11 +61,11 @@ function CityForm({ cityId }) {
             newErrors.name = 'Name is required.';
             isValid = false;
         }
-        if (city.coordinates.x == null) {
+        if (city.coordinates.x === '') {
             newErrors.coordinatesX = 'Coordinates X is required.';
             isValid = false;
         }
-        if (city.coordinates.y == null) {
+        if (city.coordinates.y === '') {
             newErrors.coordinatesY = 'Coordinates Y is required.';
             isValid = false;
         }
@@ -101,7 +109,12 @@ function CityForm({ cityId }) {
         const method = isEditMode ? 'put' : 'post';
 
         try {
-            await axios[method](url, city);
+            await axios[method](url, city, {
+                headers: {
+                    'Accept': 'application/xml',
+                    'Content-Type': 'application/xml',
+                }
+            });
             alert('City saved successfully!');
         } catch (error) {
             console.error("Error saving city:", error);

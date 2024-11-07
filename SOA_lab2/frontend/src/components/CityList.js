@@ -1,23 +1,38 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import {Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function CityList() {
     const [cities, setCities] = useState([]);
     const [filterFields, setFilterFields] = useState('');
     const [filterValues, setFilterValues] = useState('');
     const [sortFields, setSortFields] = useState('');
-    const [sortOrder, setSortOrder] = useState('asc');
+    const [sortOrder, setSortOrder] = useState('ASCENDING');
     const [page, setPage] = useState(1);
     const [size] = useState(10);
     const [governorName, setGovernorName] = useState('');
     const [climate, setClimate] = useState('');
     const [error, setError] = useState(null);
 
+    // Default values for empty fields
+    const defaultSortFields = 'id';
+    const defaultSortOrder = 'ASCENDING';
+    const defaultGovernorName = 'unknown';
+    const defaultClimate = 'TROPICAL_SAVANNA';
+
     const getCities = useCallback(async () => {
         try {
+            const filterUrl = filterFields && filterValues
+                ? `${filterFields}/${filterValues}`
+                : 'all';
             const response = await axios.get(
-                `https://localhost:22601/cities/${filterFields}/${filterValues}/${sortFields}/${sortOrder}/${page}/${size}`
+                `https://localhost:22601/cities/${filterUrl}/${sortFields || defaultSortFields}/${sortOrder || defaultSortOrder}/${page}/${size}`,
+                {
+                    headers: {
+                        'Accept': 'application/xml',
+                        'Content-Type': 'application/xml'
+                    }
+                }
             );
             setCities(response.data); // Saving fetched cities
         } catch (err) {
@@ -45,13 +60,14 @@ function CityList() {
     };
 
     const deleteCitiesByGovernor = async () => {
-        if (!governorName) {
-            alert("Please enter a valid Governor ID.");
-            return;
-        }
-
+        const govName = governorName || defaultGovernorName;
         try {
-            await axios.delete(`https://localhost:22601/cities/delete-by-governor/${governorName}`);
+            await axios.delete(`https://localhost:22601/cities/delete-by-governor/${govName}`, {
+                headers: {
+                    'Accept': 'application/xml',
+                    'Content-Type': 'application/xml'
+                }
+            });
             alert("Cities successfully deleted.");
             await getCities();
         } catch (err) {
@@ -62,7 +78,12 @@ function CityList() {
 
     const groupCitiesById = async () => {
         try {
-            const response = await axios.get(`https://localhost:22601/cities/group-by-id`);
+            const response = await axios.get(`https://localhost:22601/cities/group-by-id`, {
+                headers: {
+                    'Accept': 'application/xml',
+                    'Content-Type': 'application/xml'
+                }
+            });
             alert(JSON.stringify(response.data, null, 2));
         } catch (err) {
             alert("Error grouping cities by ID: " + err.message);
@@ -71,14 +92,15 @@ function CityList() {
     };
 
     const countCitiesByClimate = async () => {
-        if (!climate) {
-            alert("Please select a climate.");
-            return;
-        }
-
+        const selectedClimate = climate || defaultClimate;
         try {
-            const response = await axios.get(`https://localhost:22601/cities/count-by-climate/${climate}`);
-            alert(`Number of cities with climate greater than ${climate}: ${response.data}`);
+            const response = await axios.get(`https://localhost:22601/cities/count-by-climate/${selectedClimate}`, {
+                headers: {
+                    'Accept': 'application/xml',
+                    'Content-Type': 'application/xml'
+                }
+            });
+            alert(`Number of cities with climate greater than ${selectedClimate}: ${response.data}`);
         } catch (err) {
             alert("Error counting cities by climate: " + err.message);
             console.error("Error counting cities by climate: ", err);
@@ -93,7 +115,12 @@ function CityList() {
 
     const deleteCity = async (id) => {
         try {
-            await axios.delete(`https://localhost:22601/cities/${id}`);
+            await axios.delete(`https://localhost:22601/cities/${id}`, {
+                headers: {
+                    'Accept': 'application/xml',
+                    'Content-Type': 'application/xml'
+                }
+            });
             alert(`City with ID ${id} deleted.`);
             await getCities();
         } catch (err) {
@@ -130,8 +157,8 @@ function CityList() {
                            placeholder="e.g., id,name"/>
                     <label>Sort Order:</label>
                     <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
-                        <option value="asc">Ascending</option>
-                        <option value="desc">Descending</option>
+                        <option value="ASCENDING">Ascending</option>
+                        <option value="DESCENDING">Descending</option>
                     </select>
                     <button onClick={sortCities}>Sort</button>
                 </div>
@@ -181,24 +208,6 @@ function CityList() {
                         <th>Actions</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    {cities.map((city) => (
-                        <tr key={city.id}>
-                            <td>{city.id}</td>
-                            <td>{city.name}</td>
-                            <td>{city.population}</td>
-                            <td>{city.area}</td>
-                            <td>{city.establishmentDate}</td>
-                            <td>{city.metersAboveSeaLevel}</td>
-                            <td>{city.telephoneCode}</td>
-                            <td>{city.governor ? city.governor.name : 'N/A'}</td>
-                            <td>{city.climate}</td>
-                            <td>
-                                <button onClick={() => deleteCity(city.id)}>Delete</button>
-                            </td>
-                        </tr>
-                    ))}
-                    </tbody>
                     <tbody>
                     {cities.map((city) => (
                         <tr key={city.id} onClick={() => editCity(city.id)} style={{cursor: 'pointer'}}>

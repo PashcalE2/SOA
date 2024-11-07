@@ -3,8 +3,11 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 function SecondaryService() {
-    const [cityIds, setCityIds] = useState({ id1: '', id2: '', id3: '' });
-    const [moveCityId, setMoveCityId] = useState('');
+    const defaultCityIds = { id1: '1', id2: '2', id3: '3' }; // Example default city IDs
+    const defaultMoveCityId = '1'; // Example default city ID to move
+
+    const [cityIds, setCityIds] = useState(defaultCityIds);
+    const [moveCityId, setMoveCityId] = useState(defaultMoveCityId);
     const [totalPopulation, setTotalPopulation] = useState(null);
     const [moveMessage, setMoveMessage] = useState('');
 
@@ -12,7 +15,12 @@ function SecondaryService() {
         const { id1, id2, id3 } = cityIds;
         if (id1 && id2 && id3) {
             axios
-                .get(`https://localhost:22701/genocide/count/${id1}/${id2}/${id3}`)
+                .get(`https://localhost:22701/genocide/count/${id1}/${id2}/${id3}`, {
+                    headers: {
+                        'Accept': 'application/xml',
+                        'Content-Type': 'application/xml'
+                    }
+                })
                 .then((response) => {
                     setTotalPopulation(parseInt(response.data, 10)); // Assuming the response is a string number
                 })
@@ -28,7 +36,12 @@ function SecondaryService() {
     const movePopulation = () => {
         if (moveCityId) {
             axios
-                .post(`https://localhost:22701/genocide/move-to-poorest/${moveCityId}`)
+                .post(`https://localhost:22701/genocide/move-to-poorest/${moveCityId}`, {}, {
+                    headers: {
+                        'Accept': 'application/xml',
+                        'Content-Type': 'application/xml'
+                    }
+                })
                 .then(() => {
                     setMoveMessage('The population of the city is successfully moved!');
                 })
