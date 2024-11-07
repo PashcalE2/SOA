@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import https from "node:https";
 
 function CityList() {
+    const agent = new https.Agent({
+        rejectUnauthorized: false
+    });
+
     const [cities, setCities] = useState([]);
     const [filterFields, setFilterFields] = useState('');
     const [filterValues, setFilterValues] = useState('');
@@ -31,7 +36,8 @@ function CityList() {
                     headers: {
                         'Accept': 'application/xml',
                         'Content-Type': 'application/xml'
-                    }
+                    },
+                    httpsAgent: agent
                 }
             );
             setCities(response.data); // Saving fetched cities
@@ -66,7 +72,8 @@ function CityList() {
                 headers: {
                     'Accept': 'application/xml',
                     'Content-Type': 'application/xml'
-                }
+                },
+                httpsAgent: agent
             });
             alert("Cities successfully deleted.");
             await getCities();
@@ -82,7 +89,8 @@ function CityList() {
                 headers: {
                     'Accept': 'application/xml',
                     'Content-Type': 'application/xml'
-                }
+                },
+                httpsAgent: agent
             });
             alert(JSON.stringify(response.data, null, 2));
         } catch (err) {
@@ -98,7 +106,8 @@ function CityList() {
                 headers: {
                     'Accept': 'application/xml',
                     'Content-Type': 'application/xml'
-                }
+                },
+                httpsAgent: agent
             });
             alert(`Number of cities with climate greater than ${selectedClimate}: ${response.data}`);
         } catch (err) {
@@ -119,7 +128,8 @@ function CityList() {
                 headers: {
                     'Accept': 'application/xml',
                     'Content-Type': 'application/xml'
-                }
+                },
+                httpsAgent: agent
             });
             alert(`City with ID ${id} deleted.`);
             await getCities();

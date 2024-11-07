@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import https from "node:https";
 
 function SecondaryService() {
+    const agent = new https.Agent({
+        rejectUnauthorized: false
+    });
+
     const defaultCityIds = { id1: '1', id2: '2', id3: '3' }; // Example default city IDs
     const defaultMoveCityId = '1'; // Example default city ID to move
 
@@ -19,7 +24,8 @@ function SecondaryService() {
                     headers: {
                         'Accept': 'application/xml',
                         'Content-Type': 'application/xml'
-                    }
+                    },
+                    httpsAgent: agent
                 })
                 .then((response) => {
                     setTotalPopulation(parseInt(response.data, 10)); // Assuming the response is a string number
@@ -40,7 +46,8 @@ function SecondaryService() {
                     headers: {
                         'Accept': 'application/xml',
                         'Content-Type': 'application/xml'
-                    }
+                    },
+                    httpsAgent: agent
                 })
                 .then(() => {
                     setMoveMessage('The population of the city is successfully moved!');

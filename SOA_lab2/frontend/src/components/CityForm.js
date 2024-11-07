@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import * as https from "node:https";
 
 function CityForm({ cityId }) {
     // Default values for city state
+    const agent = new https.Agent({
+        rejectUnauthorized: false
+    });
     const defaultCity = {
         id: null,
         name: '',
@@ -45,7 +49,8 @@ function CityForm({ cityId }) {
                 headers: {
                     'Accept': 'application/xml',
                     'Content-Type': 'application/xml',
-                }
+                },
+                httpsAgent: agent
             });
             setCity(response.data);
         } catch (error) {
@@ -113,7 +118,8 @@ function CityForm({ cityId }) {
                 headers: {
                     'Accept': 'application/xml',
                     'Content-Type': 'application/xml',
-                }
+                },
+                httpsAgent: agent
             });
             alert('City saved successfully!');
         } catch (error) {
