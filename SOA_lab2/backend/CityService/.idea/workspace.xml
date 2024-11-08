@@ -11,9 +11,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e6a6a39-bc4a-48ae-b75c-7944f46153f6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/filter/CORSFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/JaxRsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/JaxRsApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../GenocideService/src/main/java/main/GenocideServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../GenocideService/src/main/java/main/GenocideServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entity/dto/GroupsById.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/dto/GroupsById.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,6 +103,9 @@
       <workItem from="1729857642663" duration="667000" />
       <workItem from="1730202957328" duration="5158000" />
       <workItem from="1730300204357" duration="5379000" />
+      <workItem from="1730487891429" duration="495000" />
+      <workItem from="1731000860529" duration="4280000" />
+      <workItem from="1731009632964" duration="6008000" />
     </task>
     <servers />
   </component>

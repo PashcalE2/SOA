@@ -1,3 +1,4 @@
+import filter.CORSFilter;
 import resource.AppExceptionMapper;
 import resource.CityResource;
 
@@ -13,6 +14,7 @@ public class JaxRsApplication extends Application {
 
     public JaxRsApplication() {
         classes.add(CityResource.class);
+        classes.add(CORSFilter.class);
         classes.add(AppExceptionMapper.class);
     }
 
