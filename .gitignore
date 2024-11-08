@@ -1,1 +1,40 @@
 ignore/
+# Git files
+.git/
+.gitignore
+
+# IntelliJ IDEA files
+.idea/
+*.iml
+*.iws
+
+# IntelliJ IDEA workspace files
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/dictionaries
+.idea/libraries
+.idea/shelf/
+.idea/compiler.xml
+.idea/jarRepositories.xml
+.idea/jsLibraryMappings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/httpRequests/
+.idea/runConfigurations/
+
+# IntelliJ IDEA Gradle-specific files
+.gradle/
+build/
+
+# User-specific files for IntelliJ IDEA
+.idea/assetWizardSettings.xml
+.idea/codeStyles
+.idea/vcs.xml
+.idea/codeStyleSettings.xml
+.idea/codeStyle
+
+# Exclude OS files
+.DS_Store
+Thumbs.db
