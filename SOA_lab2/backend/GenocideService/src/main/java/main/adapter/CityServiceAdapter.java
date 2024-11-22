@@ -1,7 +1,6 @@
 package main.adapter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import main.AppConfiguration;
@@ -10,10 +9,10 @@ import main.entity.dto.SortOrder;
 import main.entity.model.City;
 import main.exception.AppException;
 import main.exception.AppRuntimeException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
+import java.net.ConnectException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -116,6 +115,9 @@ public class CityServiceAdapter {
         }
         catch (AppRuntimeException appRuntimeException) {
             throw new AppException(appRuntimeException.getStatus(), appRuntimeException.getMessage());
+        }
+        catch (ConnectException connectException) {
+            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "Нет соединения с основным сервисом");
         }
         catch(Throwable impossible) {
             log.error(impossible.getMessage(), impossible);

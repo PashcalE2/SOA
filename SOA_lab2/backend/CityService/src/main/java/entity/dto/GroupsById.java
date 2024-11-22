@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@XmlRootElement
+@XmlRootElement(name = "groups")
 public class GroupsById {
-    private List<GroupById> groups;
+    private List<GroupById> group;
 }
