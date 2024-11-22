@@ -1,19 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import https from "node:https";
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 function CityList() {
-    const agent = new https.Agent({
-        rejectUnauthorized: false
-    });
-
     const [cities, setCities] = useState([]);
     const [filterFields, setFilterFields] = useState('');
     const [filterValues, setFilterValues] = useState('');
     const [sortFields, setSortFields] = useState('');
     const [sortOrder, setSortOrder] = useState('ASCENDING');
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const [size] = useState(10);
     const [governorName, setGovernorName] = useState('');
     const [climate, setClimate] = useState('');
@@ -24,6 +20,20 @@ function CityList() {
     const defaultSortOrder = 'ASCENDING';
     const defaultGovernorName = 'unknown';
     const defaultClimate = 'TROPICAL_SAVANNA';
+
+    const handleXmlError = (xmlData) => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlData, "application/xml");
+        const errorNode = xmlDoc.getElementsByTagName("error")[0];
+        if (errorNode) {
+            const messageNode = errorNode.getElementsByTagName("message")[0];
+            if (messageNode && messageNode.textContent) {
+                console.log(`Error: ${messageNode.textContent}`)
+                return messageNode.textContent;
+            }
+        }
+        return false;
+    };
 
     const getCities = useCallback(async () => {
         try {
@@ -37,31 +47,72 @@ function CityList() {
                         'Accept': 'application/xml',
                         'Content-Type': 'application/xml'
                     },
-                    httpsAgent: agent
+                    responseType: 'text'  // Убедитесь, что ответ приходит как текст (XML)
                 }
             );
-            setCities(response.data); // Saving fetched cities
+            console.log(response.data);
+
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(response.data, "application/xml");
+
+            const parseError = xmlDoc.getElementsByTagName("parsererror");
+            if (parseError.length) {
+                alert("Invalid XML response");
+            }
+
+            const cityNodes = xmlDoc.getElementsByTagName("city"); // Предположим, что города обернуты в теги <city>
+
+            const citiesArray = Array.from(cityNodes).map((cityNode) => {
+                return {
+                    id: cityNode.getElementsByTagName("id")[0]?.textContent,
+                    name: cityNode.getElementsByTagName("name")[0]?.textContent,
+                    population: cityNode.getElementsByTagName("population")[0]?.textContent,
+                    area: cityNode.getElementsByTagName("area")[0]?.textContent,
+                    establishmentDate: cityNode.getElementsByTagName("establishmentDate")[0]?.textContent,
+                    metersAboveSeaLevel: cityNode.getElementsByTagName("metersAboveSeaLevel")[0]?.textContent,
+                    telephoneCode: cityNode.getElementsByTagName("telephoneCode")[0]?.textContent,
+                    governor: cityNode.getElementsByTagName("governor")[0]?.getElementsByTagName('name')[0]?.textContent,
+                    governorName: cityNode.getElementsByTagName("governor")[0]?.getElementsByTagName('name')[0]?.textContent,
+                    governorHeight: cityNode.getElementsByTagName("governor")[0]?.getElementsByTagName('height')[0]?.textContent,
+                    governorAge: cityNode.getElementsByTagName("governor")[0]?.getElementsByTagName('age')[0]?.textContent,
+                    climate: cityNode.getElementsByTagName("climate")[0]?.textContent
+                };
+            });
+            if (Array.isArray(citiesArray) && citiesArray.length > 0) {
+                setCities(citiesArray);
+            }
         } catch (err) {
-            alert("Error fetching cities: " + err.message);
+            const errorMessage = err.response?.data
+                ? handleXmlError(err.response.data)
+                : null;
+
+            if (errorMessage) {
+                alert(`Error fetching cities: ${err.message}\n${errorMessage}`);
+                return;
+            }
+            alert(`Error fetching cities: ${err.message}`);
             console.error("Error fetching cities:", err);
         }
     }, [filterFields, filterValues, sortFields, sortOrder, page, size]);
 
     useEffect(() => {
-        getCities().then(() => {
-            console.log("Cities fetched successfully.");
-        }).catch((err) => {
-            console.error("Error in fetching cities:", err);
-        });
+        const timeoutId = setTimeout(() => {
+            getCities().then(() => {
+                console.log("Cities fetched successfully.");
+            }).catch((err) => {
+                console.error("Error in fetching cities:", err);
+            });
+        }, 1000); // Задержка 500 мс
+        return () => clearTimeout(timeoutId);
     }, [filterFields, filterValues, sortFields, sortOrder, page]);
 
     const applyFilter = async () => {
-        setPage(1);
+        setPage(0);
         await getCities();
     };
 
     const sortCities = async () => {
-        setPage(1);
+        setPage(0);
         await getCities();
     };
 
@@ -72,13 +123,20 @@ function CityList() {
                 headers: {
                     'Accept': 'application/xml',
                     'Content-Type': 'application/xml'
-                },
-                httpsAgent: agent
+                }
             });
             alert("Cities successfully deleted.");
             await getCities();
         } catch (err) {
-            alert("Error deleting cities by governor: " + err.message);
+            const errorMessage = err.response?.data
+                ? handleXmlError(err.response.data)
+                : null;
+
+            if (errorMessage) {
+                alert(`Error deleting cities by governor: ${err.message}\n${errorMessage}`);
+                return;
+            }
+            alert(`Error deleting cities by governor: ${err.message}`);
             console.error("Error deleting cities by governor: ", err);
         }
     };
@@ -89,15 +147,46 @@ function CityList() {
                 headers: {
                     'Accept': 'application/xml',
                     'Content-Type': 'application/xml'
-                },
-                httpsAgent: agent
+                }
             });
-            alert(JSON.stringify(response.data, null, 2));
+
+            if (handleXmlError(response.data)) {
+                return; // Прерываем выполнение, если обнаружена ошибка
+            }
+
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(response.data, 'application/xml');
+            const groups = xmlDoc.getElementsByTagName('group');
+
+            const groupData = Array.from(groups).map(group => {
+                const id = group.getElementsByTagName('id')[0]?.textContent;
+                const count = group.getElementsByTagName('count')[0]?.textContent;
+                return id && count ? `ID: ${id} (${count})` : null;
+            }).filter(item => item !== null);
+
+            if (groupData.length > 0) {
+                const result = groupData.join('\n');
+                alert(result);
+                console.log(result);
+            } else {
+                alert("No valid group data found.");
+            }
         } catch (err) {
-            alert("Error grouping cities by ID: " + err.message);
-            console.error("Error grouping cities by ID: ", err);
+            const errorMessage = err.response?.data
+                ? handleXmlError(err.response.data)
+                : null;
+
+            if (errorMessage) {
+                alert(`Error grouping cities by ID: ${err.message}\n${errorMessage}`);
+            } else {
+                alert(`Error grouping cities by ID: ${err.message}`);
+            }
+
+            console.error("Error grouping cities by ID:", err);
         }
     };
+
+
 
     const countCitiesByClimate = async () => {
         const selectedClimate = climate || defaultClimate;
@@ -106,20 +195,32 @@ function CityList() {
                 headers: {
                     'Accept': 'application/xml',
                     'Content-Type': 'application/xml'
-                },
-                httpsAgent: agent
+                }
             });
-            alert(`Number of cities with climate greater than ${selectedClimate}: ${response.data}`);
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(response.data, "application/xml");
+            const countElement = xmlDoc.getElementsByTagName("value")[0];
+            const count = countElement.textContent;
+            alert(`Number of cities with climate ${selectedClimate}: ${count}`);
         } catch (err) {
-            alert("Error counting cities by climate: " + err.message);
-            console.error("Error counting cities by climate: ", err);
+            const errorMessage = err.response?.data
+                ? handleXmlError(err.response.data)
+                : null;
+
+            if (errorMessage) {
+                alert(`Error counting cities by climate: ${err.message}\n${errorMessage}`);
+                return;
+            }
+            alert(`Error counting cities by climate: ${err.message}`);
+            console.error("Error counting cities by climate:", err);
         }
     };
+
 
     const navigate = useNavigate();
 
     const editCity = (id) => {
-        navigate(`/edit-city/${id}`);
+        navigate(`/edit-city/${id}`, { state: { cityId: id } });
     };
 
     const deleteCity = async (id) => {
@@ -128,13 +229,20 @@ function CityList() {
                 headers: {
                     'Accept': 'application/xml',
                     'Content-Type': 'application/xml'
-                },
-                httpsAgent: agent
+                }
             });
             alert(`City with ID ${id} deleted.`);
             await getCities();
         } catch (err) {
-            alert("Error deleting city: " + err.message);
+            const errorMessage = err.response?.data
+                ? handleXmlError(err.response.data)
+                : null;
+
+            if (errorMessage) {
+                alert(`Error deleting city: ${err.message}\n${errorMessage}`);
+                return;
+            }
+            alert(`Error deleting city: ${err.message}`);
             console.error("Error deleting city: ", err);
         }
     };
@@ -142,7 +250,7 @@ function CityList() {
     const handleSort = (field) => setSortFields(field);
 
     const nextPage = () => setPage((prevPage) => prevPage + 1);
-    const previousPage = () => setPage((prevPage) => Math.max(prevPage - 1, 1));
+    const previousPage = () => setPage((prevPage) => Math.max(prevPage - 1, 0));
 
     return (
         <div>
@@ -153,7 +261,7 @@ function CityList() {
             <div className="filter-sort-container">
                 <div className="filter-container">
                     <label>Filter Fields:</label>
-                    <input value={filterFields} onChange={(e) => setFilterFields(e.target.value)}
+                    <input value={filterFields} onInput={(e) => setFilterFields(e.target.value)}
                            placeholder="e.g., name,population"/>
                     <label>Filter Values:</label>
                     <input value={filterValues} onChange={(e) => setFilterValues(e.target.value)}
@@ -219,7 +327,7 @@ function CityList() {
                     </tr>
                     </thead>
                     <tbody>
-                    {cities.map((city) => (
+                    {(Array.isArray(cities) ? cities : []).map((city) => (
                         <tr key={city.id} onClick={() => editCity(city.id)} style={{cursor: 'pointer'}}>
                             <td>{city.id}</td>
                             <td>{city.name}</td>
@@ -228,19 +336,19 @@ function CityList() {
                             <td>{city.establishmentDate}</td>
                             <td>{city.metersAboveSeaLevel}</td>
                             <td>{city.telephoneCode}</td>
-                            <td>{city.governor ? city.governor.name : 'N/A'}</td>
+                            <td>{city.governor ? city.governorName : 'N/A'}</td>
                             <td>{city.climate}</td>
                             <td>
                                 <button onClick={() => deleteCity(city.id)}>Delete</button>
                             </td>
                         </tr>
                     ))}
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
             </div>
 
             <div className="pagination">
-                <button onClick={previousPage} disabled={page <= 1}>Previous</button>
+                <button onClick={previousPage} disabled={page <= 0}>Previous</button>
                 <button onClick={nextPage}>Next</button>
             </div>
             <Link to="/create-city" className="router-link">Create New City</Link>

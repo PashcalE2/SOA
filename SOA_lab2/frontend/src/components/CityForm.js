@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import * as https from "node:https";
+import {Link, useLocation, useParams} from 'react-router-dom';
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-function CityForm({ cityId }) {
-    // Default values for city state
-    const agent = new https.Agent({
-        rejectUnauthorized: false
-    });
+function CityForm() {
     const defaultCity = {
         id: null,
         name: '',
@@ -20,7 +16,7 @@ function CityForm({ cityId }) {
         climate: 'TROPICAL_SAVANNA', // Default climate
         governor: { name: '', age: '', height: '' },
     };
-
+    const cityId = useLocation().state?.cityId;
     const [city, setCity] = useState(defaultCity);
     const [climates] = useState([
         'TROPICAL_SAVANNA',
@@ -30,18 +26,70 @@ function CityForm({ cityId }) {
         'DESERT',
     ]);
     const [errors, setErrors] = useState({});
-    const [isEditMode, setIsEditMode] = useState(false);
+
+    const handleXmlError = (xmlData) => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlData, "application/xml");
+        const errorNode = xmlDoc.getElementsByTagName("error")[0];
+        if (errorNode) {
+            const messageNode = errorNode.getElementsByTagName("message")[0];
+            if (messageNode && messageNode.textContent) {
+                console.log(`Error: ${messageNode.textContent}`)
+                return messageNode.textContent;
+            }
+        }
+        return false;
+    };
 
     useEffect(() => {
         if (cityId) {
-            setIsEditMode(true);
-            loadCity(cityId).then(() => {
-                console.log("Cities fetched successfully.");
-            }).catch((err) => {
-                console.error("Error in fetching cities:", err);
+            loadCity(cityId).catch((err) => {
+                console.error("Error in fetching city:", err);
             });
         }
     }, [cityId]);
+
+    // Функция для парсинга XML данных
+    const parseXMLResponse = (xml) => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xml, 'text/xml');
+
+        const cityElement = xmlDoc.getElementsByTagName('city')[0];
+        if (!cityElement) {
+            throw new Error('Invalid XML structure');
+        }
+
+        const name = cityElement.getElementsByTagName('name')[0]?.textContent || '';
+        const coordinates = {
+            x: cityElement.getElementsByTagName('coordinates')[0]?.getElementsByTagName('x')[0]?.textContent || '',
+            y: cityElement.getElementsByTagName('coordinates')[0]?.getElementsByTagName('y')[0]?.textContent || '',
+        };
+        const area = cityElement.getElementsByTagName('area')[0]?.textContent || '';
+        const population = cityElement.getElementsByTagName('population')[0]?.textContent || '';
+        const metersAboveSeaLevel = cityElement.getElementsByTagName('metersAboveSeaLevel')[0]?.textContent || '';
+        const establishmentDate = cityElement.getElementsByTagName('establishmentDate')[0]?.textContent || '';
+        const telephoneCode = cityElement.getElementsByTagName('telephoneCode')[0]?.textContent || '';
+        const climate = cityElement.getElementsByTagName('climate')[0]?.textContent || '';
+
+        const governorElement = cityElement.getElementsByTagName('governor')[0];
+        const governor = {
+            name: governorElement?.getElementsByTagName('name')[0]?.textContent || '',
+            age: governorElement?.getElementsByTagName('age')[0]?.textContent || '',
+            height: governorElement?.getElementsByTagName('height')[0]?.textContent || '',
+        };
+
+        return {
+            name,
+            coordinates,
+            area,
+            population,
+            metersAboveSeaLevel,
+            establishmentDate,
+            telephoneCode,
+            climate,
+            governor,
+        };
+    };
 
     const loadCity = async (id) => {
         try {
@@ -49,12 +97,21 @@ function CityForm({ cityId }) {
                 headers: {
                     'Accept': 'application/xml',
                     'Content-Type': 'application/xml',
-                },
-                httpsAgent: agent
+                }
             });
-            setCity(response.data);
-        } catch (error) {
-            console.error("Error fetching city:", error);
+            const cityData = parseXMLResponse(response.data);
+            setCity(cityData);
+        } catch (err) {
+            const errorMessage = err.response?.data
+                ? handleXmlError(err.response.data)
+                : null;
+
+            if (errorMessage) {
+                alert(`Error fetching city: ${err.message}\n${errorMessage}`);
+                return;
+            }
+            alert(`Error fetching city: ${err.message}`);
+            console.error("Error fetching city: ", err);
         }
     };
 
@@ -108,29 +165,57 @@ function CityForm({ cityId }) {
 
         if (!validateFields()) return;
 
-        const url = isEditMode
-            ? `https://localhost:22601/cities/${city.id}`
+        const url = cityId
+            ? `https://localhost:22601/cities/${cityId}`
             : `https://localhost:22601/cities`;
-        const method = isEditMode ? 'put' : 'post';
+        const method = cityId ? 'put' : 'post';
+
+        const xmlData = `
+            <city>
+                <name>${city.name}</name>
+                <coordinates>
+                    <x>${city.coordinates.x}</x>
+                    <y>${city.coordinates.y}</y>
+                </coordinates>
+                <area>${city.area}</area>
+                <population>${city.population}</population>
+                <metersAboveSeaLevel>${city.metersAboveSeaLevel}</metersAboveSeaLevel>
+                <establishmentDate>${city.establishmentDate}</establishmentDate>
+                <telephoneCode>${city.telephoneCode}</telephoneCode>
+                <climate>${city.climate}</climate>
+                <governor>
+                    <name>${city.governor.name}</name>
+                    <age>${city.governor.age}</age>
+                    <height>${city.governor.height}</height>
+                </governor>
+            </city>`;
 
         try {
-            await axios[method](url, city, {
+            await axios[method](url, xmlData, {
                 headers: {
                     'Accept': 'application/xml',
                     'Content-Type': 'application/xml',
-                },
-                httpsAgent: agent
+                }
             });
             alert('City saved successfully!');
-        } catch (error) {
-            console.error("Error saving city:", error);
-            alert("Error saving city: " + error.message);
+        } catch (err) {
+            const errorMessage = err.response?.data
+                ? handleXmlError(err.response.data)
+                : null;
+
+            if (errorMessage) {
+                alert(`Error saving city: ${err.message}\n${errorMessage}`);
+                return;
+            }
+
+            alert(`Error saving city: ${err.message}`);
+            console.error("Error saving city: ", err);
         }
     };
 
     return (
         <div>
-            <h1>{isEditMode ? 'Edit City' : 'Add City'}</h1>
+            <h1>{cityId ? 'Edit City' : 'Add City'}</h1>
             <form onSubmit={submitForm}>
                 <div>
                     <label>Name*:</label>
@@ -276,7 +361,7 @@ function CityForm({ cityId }) {
                     />
                     {errors.governorHeight && <span className="error">{errors.governorHeight}</span>}
                 </div>
-                <button type="submit">{isEditMode ? 'Update City' : 'Create City'}</button>
+                <button type="submit">{cityId ? 'Update City' : 'Create City'}</button>
                 <Link to="/" className="router-link">Cancel</Link>
             </form>
         </div>

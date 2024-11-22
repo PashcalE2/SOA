@@ -1,13 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import https from "node:https";
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 function SecondaryService() {
-    const agent = new https.Agent({
-        rejectUnauthorized: false
-    });
-
     const defaultCityIds = { id1: '1', id2: '2', id3: '3' }; // Example default city IDs
     const defaultMoveCityId = '1'; // Example default city ID to move
 
@@ -16,23 +12,59 @@ function SecondaryService() {
     const [totalPopulation, setTotalPopulation] = useState(null);
     const [moveMessage, setMoveMessage] = useState('');
 
+    const handleXmlError = (xmlData) => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlData, "application/xml");
+        const errorNode = xmlDoc.getElementsByTagName("error")[0];
+        if (errorNode) {
+            const messageNode = errorNode.getElementsByTagName("message")[0];
+            if (messageNode && messageNode.textContent) {
+                console.log(`Error: ${messageNode.textContent}`)
+                return messageNode.textContent;
+            }
+        }
+        return false;
+    };
+
     const getTotalPopulation = useCallback(() => {
         const { id1, id2, id3 } = cityIds;
         if (id1 && id2 && id3) {
-            axios
-                .get(`https://localhost:22701/genocide/count/${id1}/${id2}/${id3}`, {
+            axios.get(`https://localhost:22701/genocide/count/${id1}/${id2}/${id3}`, {
                     headers: {
                         'Accept': 'application/xml',
                         'Content-Type': 'application/xml'
-                    },
-                    httpsAgent: agent
-                })
-                .then((response) => {
-                    setTotalPopulation(parseInt(response.data, 10)); // Assuming the response is a string number
-                })
-                .catch((error) => {
-                    alert('Error fetching total population:' + error.message);
-                    console.error('Error fetching total population:', error);
+                    }
+                }).then((response) => {
+                    if (response.data) {
+                        const parser = new DOMParser();
+                        const xmlDoc = parser.parseFromString(response.data, 'application/xml');
+                        const countElement = xmlDoc.getElementsByTagName('count')[0];
+                        if (countElement) {
+                            const count = parseInt(countElement.textContent, 10);
+                            if (!isNaN(count)) {
+                                setTotalPopulation(count);
+                            } else {
+                                console.error('Invalid population count:', count);
+                                throw new Error('Invalid population count in response.');
+                            }
+                        } else {
+                            throw new Error('Missing <Count> element in response XML.');
+                        }
+                    } else {
+                        throw new Error('Empty response from the server.');
+                    }
+                }).catch((err) => {
+                    const errorMessage = err.response?.data
+                        ? handleXmlError(err.response.data)
+                        : null;
+
+                    if (errorMessage) {
+                        alert(`Error fetching total population: ${err.message}\n${errorMessage}`);
+                        return;
+                    }
+
+                    alert(`Error fetching total population: ${err.message}`);
+                    console.error("Error fetching total population: ", err);
                 });
         } else {
             alert('Please enter valid city IDs.');
@@ -46,15 +78,23 @@ function SecondaryService() {
                     headers: {
                         'Accept': 'application/xml',
                         'Content-Type': 'application/xml'
-                    },
-                    httpsAgent: agent
+                    }
                 })
                 .then(() => {
                     setMoveMessage('The population of the city is successfully moved!');
                 })
-                .catch((error) => {
-                    alert('Error moving population:' + error.message);
-                    console.error('Error moving population:', error);
+                .catch((err) => {
+                    const errorMessage = err.response?.data
+                        ? handleXmlError(err.response.data)
+                        : null;
+
+                    if (errorMessage) {
+                        alert(`Error moving population: ${err.message}\n${errorMessage}`);
+                        return;
+                    }
+
+                    alert(`Error moving population: ${err.message}`);
+                    console.error('Error moving population:', err);
                 });
         } else {
             alert('Please enter a valid city ID.');
