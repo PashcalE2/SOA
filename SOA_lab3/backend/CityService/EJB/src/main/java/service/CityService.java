@@ -12,6 +12,7 @@ import jakarta.ejb.Remote;
 import jakarta.ejb.Stateless;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.jboss.ejb3.annotation.Pool;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 @Stateless
 @Remote(CityServiceInterface.class)
+@Pool("city-service-pool")
 @Slf4j
 public class CityService implements CityServiceInterface {
     private static final CityRepository cityRepository = new CityRepository();

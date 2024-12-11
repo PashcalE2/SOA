@@ -10,7 +10,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
-import service.CityService;
+import service.CityServiceInterface;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import java.util.List;
 @Slf4j
 public class CityResource {
     @EJB
-    private CityService cityService;
+    private CityServiceInterface cityService;
 
     @GET
     @Path("/{filter-fields}/{filter-values}/{sort-fields}/{sort-order}/{page}/{size}")

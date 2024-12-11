@@ -1,20 +1,22 @@
 package main.service;
 
-import lombok.AllArgsConstructor;
+import jakarta.ejb.Remote;
+import jakarta.ejb.Stateless;
 import lombok.extern.slf4j.Slf4j;
 import main.adapter.CityServiceAdapter;
+import main.entity.HttpStatus;
 import main.entity.dto.SortOrder;
 import main.entity.model.City;
 import main.exception.AppException;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
+import org.jboss.ejb3.annotation.Pool;
 
 
-@Component
-@AllArgsConstructor
+@Stateless
+@Remote(PopulationServiceInterface.class)
+@Pool("genocide-service-pool")
 @Slf4j
-public class PopulationService {
-    private final CityServiceAdapter cityServiceAdapter;
+public class PopulationService implements PopulationServiceInterface {
+    private final CityServiceAdapter cityServiceAdapter = new CityServiceAdapter();
 
     public Long countPopulation(Long id1, Long id2, Long id3) throws AppException {
         City city1 = cityServiceAdapter.getById(id1);
@@ -29,7 +31,7 @@ public class PopulationService {
         City poorestCity = cityServiceAdapter.getAllSortedPaginated("population", SortOrder.ASCENDING, 0, 1).getCity().get(0);
 
         if (mainCity.equals(poorestCity)) {
-            throw new AppException(HttpStatus.CONFLICT, String.format("Город с таким ID уже с самым низким уровнем жизни: %s", cityId));
+            throw new AppException(HttpStatus.FORBIDDEN, String.format("Город с таким ID уже с самым низким уровнем жизни: %s", cityId));
         }
 
         log.info("Население было: откуда ({}), куда ({})", mainCity.getPopulation(), poorestCity.getPopulation());

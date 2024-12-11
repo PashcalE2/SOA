@@ -1,7 +1,6 @@
 package main.adapter;
 
 import lombok.AllArgsConstructor;
-import main.AppConfiguration;
 
 @AllArgsConstructor
 public enum CitiesApi {

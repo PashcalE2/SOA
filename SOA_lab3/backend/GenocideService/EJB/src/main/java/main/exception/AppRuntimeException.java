@@ -1,7 +1,7 @@
 package main.exception;
 
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
+import main.entity.HttpStatus;
 
 @Getter
 public class AppRuntimeException extends RuntimeException {

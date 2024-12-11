@@ -1,20 +1,22 @@
 package main.controller;
 
-import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import main.entity.dto.Count;
 import main.exception.AppException;
-import main.service.PopulationService;
+import main.service.PopulationServiceInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/genocide")
-@AllArgsConstructor
+@NoArgsConstructor
 @Slf4j
 public class PopulationController {
-    private final PopulationService populationService;
+    @Autowired
+    private PopulationServiceInterface populationService;
 
     @GetMapping("/count/{id1}/{id2}/{id3}")
     public ResponseEntity<?> countPopulation(@PathVariable Long id1, @PathVariable Long id2, @PathVariable Long id3) throws AppException {

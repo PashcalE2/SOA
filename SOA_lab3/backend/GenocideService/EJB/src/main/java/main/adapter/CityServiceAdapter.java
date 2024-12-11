@@ -2,14 +2,12 @@ package main.adapter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import main.AppConfiguration;
+import main.entity.HttpStatus;
 import main.entity.dto.CitiesList;
 import main.entity.dto.SortOrder;
 import main.entity.model.City;
 import main.exception.AppException;
 import main.exception.AppRuntimeException;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 
 import java.net.ConnectException;
 import java.net.URI;
@@ -20,17 +18,16 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
 
-@Component
 @RequiredArgsConstructor
 @Slf4j
 public class CityServiceAdapter {
-    private final AppConfiguration appConfiguration;
+    private final String baseEndpoint = "https://localhost:22601";
     private final HttpClient client = HttpClient.newHttpClient();
     private final XmlMapper<City> cityMapper = new XmlMapper<>(City.class);
     private final XmlMapper<CitiesList> citiesListMapper = new XmlMapper<>(CitiesList.class);
 
     public City getById(Long id) throws AppException {
-        URI uri = URI.create(CitiesApi.GET_BY_ID.buildUrl(appConfiguration.baseEndpoint, id));
+        URI uri = URI.create(CitiesApi.GET_BY_ID.buildUrl(baseEndpoint, id));
         HttpRequest request = HttpRequest
                 .newBuilder()
                 .uri(uri)
@@ -61,7 +58,7 @@ public class CityServiceAdapter {
     }
 
     public CitiesList getAllSortedPaginated(String sortFields, SortOrder sortOrder, Integer page, Integer size) {
-        URI uri = URI.create(CitiesApi.GET_ALL_SORTED_PAGINATED.buildUrl(appConfiguration.baseEndpoint, sortFields, sortOrder, page, size));
+        URI uri = URI.create(CitiesApi.GET_ALL_SORTED_PAGINATED.buildUrl(baseEndpoint, sortFields, sortOrder, page, size));
         HttpRequest request = HttpRequest
                 .newBuilder()
                 .uri(uri)
@@ -73,7 +70,7 @@ public class CityServiceAdapter {
     }
 
     public City putById(Long cityId, City city) throws AppException {
-        URI uri = URI.create(CitiesApi.PUT_BY_ID.buildUrl(appConfiguration.baseEndpoint, cityId));
+        URI uri = URI.create(CitiesApi.PUT_BY_ID.buildUrl(baseEndpoint, cityId));
         HttpRequest request = HttpRequest
                 .newBuilder()
                 .uri(uri)
