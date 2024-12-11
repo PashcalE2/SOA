@@ -5,21 +5,22 @@ import entity.dto.SortOrder;
 import entity.model.City;
 import entity.model.Climate;
 import exception.AppException;
-import lombok.extern.slf4j.Slf4j;
-
+import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import lombok.extern.slf4j.Slf4j;
 import service.CityService;
 
-import java.util.*;
+import java.util.List;
 
 @Path("/cities")
 @Consumes(MediaType.APPLICATION_XML)
 @Produces(MediaType.APPLICATION_XML)
 @Slf4j
 public class CityResource {
-    private static final CityService cityService = new CityService();
+    @EJB
+    private CityService cityService;
 
     @GET
     @Path("/{filter-fields}/{filter-values}/{sort-fields}/{sort-order}/{page}/{size}")

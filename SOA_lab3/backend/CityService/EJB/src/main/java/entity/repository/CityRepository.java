@@ -1,11 +1,11 @@
 package entity.repository;
 
+import entity.model.City;
 import entity.model.Human;
 import exception.AppException;
 import jakarta.ws.rs.core.Response;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import entity.model.City;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;

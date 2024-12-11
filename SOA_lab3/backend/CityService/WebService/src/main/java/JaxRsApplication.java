@@ -1,9 +1,8 @@
 import filter.CORSFilter;
-import resource.AppExceptionMapper;
-import resource.CityResource;
-
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
+import resource.AppExceptionMapper;
+import resource.CityResource;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -4,12 +4,14 @@ import entity.dto.Count;
 import entity.dto.GroupById;
 import entity.dto.GroupsById;
 import entity.dto.SortOrder;
-import exception.AppException;
-import jakarta.ws.rs.core.Response;
-import lombok.extern.slf4j.Slf4j;
 import entity.model.City;
 import entity.model.Climate;
 import entity.repository.CityRepository;
+import exception.AppException;
+import jakarta.ejb.Remote;
+import jakarta.ejb.Stateless;
+import jakarta.ws.rs.core.Response;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
@@ -18,8 +20,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
+@Stateless
+@Remote(CityServiceInterface.class)
 @Slf4j
-public class CityService {
+public class CityService implements CityServiceInterface {
     private static final CityRepository cityRepository = new CityRepository();
 
     public List<City> get(String filterFields, String filterValues, String sortFields, SortOrder sortOrder, Integer page, Integer size) throws AppException {
