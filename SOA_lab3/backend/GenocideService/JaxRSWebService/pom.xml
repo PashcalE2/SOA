@@ -6,43 +6,21 @@
         <artifactId>GenocideService</artifactId>
         <version>1.0</version>
     </parent>
-    <artifactId>EJB</artifactId>
-    <packaging>ejb</packaging>
-    <name>GenocideEJB</name>
-
+    <artifactId>JaxRSWebService</artifactId>
+    <packaging>war</packaging>
+    <name>JaxRSWebService</name>
+    <url>http://maven.apache.org</url>
     <dependencies>
+        <dependency>
+            <groupId>main</groupId>
+            <artifactId>EJB</artifactId>
+            <version>1.0</version>
+        </dependency>
+
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
             <version>10.0.0</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.20.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.20.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.20.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.ejb3</groupId>
-            <artifactId>jboss-ejb3-ext-api</artifactId>
-            <version>2.2.0.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
 
@@ -73,8 +51,15 @@
             <version>4.0.5</version>
             <scope>runtime</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <build>
-        <finalName>GenocideEJB</finalName>
+        <finalName>ROOT</finalName>
     </build>
 </project>

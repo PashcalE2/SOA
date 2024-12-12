@@ -1,4 +1,4 @@
-package main.entity.dto;
+package entity.dto;
 
 import java.io.Serializable;
 

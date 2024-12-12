@@ -1,13 +1,13 @@
-package main.adapter;
+package adapter;
 
+import entity.dto.CitiesList;
+import entity.model.City;
+import exception.AppException;
+import exception.AppRuntimeException;
+import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import main.entity.HttpStatus;
-import main.entity.dto.CitiesList;
-import main.entity.dto.SortOrder;
-import main.entity.model.City;
-import main.exception.AppException;
-import main.exception.AppRuntimeException;
+import entity.dto.SortOrder;
 
 import java.net.ConnectException;
 import java.net.URI;
@@ -39,15 +39,15 @@ public class CityServiceAdapter {
 
         try {
             city = futureResponse.thenApply(response -> {
-                if (response.statusCode() == HttpStatus.OK.value()) {
+                if (response.statusCode() == Response.Status.OK.getStatusCode()) {
                     return cityMapper.deserialize(response.body());
                 }
 
-                if (response.statusCode() == HttpStatus.NOT_FOUND.value()) {
-                    throw new AppRuntimeException(HttpStatus.NOT_FOUND, String.format("Нет города с таким ID: %s", id));
+                if (response.statusCode() == Response.Status.NOT_FOUND.getStatusCode()) {
+                    throw new AppRuntimeException(Response.Status.NOT_FOUND, String.format("Нет города с таким ID: %s", id));
                 }
 
-                throw new AppRuntimeException(HttpStatus.INTERNAL_SERVER_ERROR, "Не обработан статус ответа от основного сервера");
+                throw new AppRuntimeException(Response.Status.INTERNAL_SERVER_ERROR, "Не обработан статус ответа от основного сервера");
             }).join();
         }
         catch (CompletionException e) {
@@ -83,19 +83,19 @@ public class CityServiceAdapter {
 
         try {
             updatedCity = futureResponse.thenApply(response -> {
-                if (response.statusCode() == HttpStatus.OK.value()) {
+                if (response.statusCode() == Response.Status.OK.getStatusCode()) {
                     return cityMapper.deserialize(response.body());
                 }
 
-                if (response.statusCode() == HttpStatus.NOT_FOUND.value()) {
-                    throw new AppRuntimeException(HttpStatus.NOT_FOUND, String.format("Нет города с таким ID: %s", cityId));
+                if (response.statusCode() == Response.Status.NOT_FOUND.getStatusCode()) {
+                    throw new AppRuntimeException(Response.Status.NOT_FOUND, String.format("Нет города с таким ID: %s", cityId));
                 }
 
-                if (response.statusCode() == HttpStatus.BAD_REQUEST.value()) {
-                    throw new AppRuntimeException(HttpStatus.BAD_REQUEST, "Плохой запрос");
+                if (response.statusCode() == Response.Status.BAD_REQUEST.getStatusCode()) {
+                    throw new AppRuntimeException(Response.Status.BAD_REQUEST, "Плохой запрос");
                 }
 
-                throw new AppRuntimeException(HttpStatus.INTERNAL_SERVER_ERROR, "Не обработан статус ответа от основного сервера");
+                throw new AppRuntimeException(Response.Status.INTERNAL_SERVER_ERROR, "Не обработан статус ответа от основного сервера");
             }).join();
         }
         catch (CompletionException e) {
@@ -113,11 +113,11 @@ public class CityServiceAdapter {
             throw new AppException(appRuntimeException.getStatus(), appRuntimeException.getMessage());
         }
         catch (ConnectException connectException) {
-            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "Нет соединения с основным сервисом");
+            throw new AppException(Response.Status.INTERNAL_SERVER_ERROR, "Нет соединения с основным сервисом");
         }
         catch(Throwable impossible) {
             log.error(impossible.getMessage(), impossible);
-            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "Необработанное исключение");
+            throw new AppException(Response.Status.INTERNAL_SERVER_ERROR, "Необработанное исключение");
         }
     }
 }

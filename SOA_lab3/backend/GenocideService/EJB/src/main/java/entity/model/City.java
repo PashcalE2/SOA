@@ -1,4 +1,4 @@
-package main.entity.model;
+package entity.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
@@ -57,42 +57,40 @@ public class City implements Serializable {
 
     @JsonIgnore
     public int compareBy(City o, String field) {
-        switch (field) {
-            case "id": return id.compareTo(o.id);
-            case "name": return name.compareTo(o.name);
-            case "coordinates": return coordinates.compareTo(o.coordinates);
-            case "creationDate": return creationDate.compareTo(o.creationDate);
-            case "area": return Long.compare(area, o.area);
-            case "population": return Integer.compare(population, o.population);
-            case "metersAboveSeaLevel": return metersAboveSeaLevel.compareTo(o.metersAboveSeaLevel);
-            case "establishmentDate": return establishmentDate.compareTo(o.establishmentDate);
-            case "telephoneCode": return Long.compare(telephoneCode, o.telephoneCode);
-            case "climate": return climate.compareTo(o.climate);
-            case "governor": return governor.compareTo(o.governor);
-
-            default: throw new IllegalArgumentException(String.format("В классе %s нет поля %s", City.class.getName(), field));
-        }
+        return switch (field) {
+            case "id" -> id.compareTo(o.id);
+            case "name" -> name.compareTo(o.name);
+            case "coordinates" -> coordinates.compareTo(o.coordinates);
+            case "creationDate" -> creationDate.compareTo(o.creationDate);
+            case "area" -> Long.compare(area, o.area);
+            case "population" -> Integer.compare(population, o.population);
+            case "metersAboveSeaLevel" -> metersAboveSeaLevel.compareTo(o.metersAboveSeaLevel);
+            case "establishmentDate" -> establishmentDate.compareTo(o.establishmentDate);
+            case "telephoneCode" -> Long.compare(telephoneCode, o.telephoneCode);
+            case "climate" -> climate.compareTo(o.climate);
+            case "governor" -> governor.compareTo(o.governor);
+            default ->
+                    throw new IllegalArgumentException(String.format("В классе %s нет поля %s", City.class.getName(), field));
+        };
     }
 
     @JsonIgnore
     public boolean fieldEquals(String field, String o) {
-        switch (field) {
-            case "id": return id.equals(Long.parseLong(o));
-            case "name": return name.equals(o);
-            case "creationDate": return creationDate.equals(ZonedDateTime.parse(o));
-            case "area": return area == Long.parseLong(o);
-            case "population": return population == Integer.parseInt(o);
-            case "metersAboveSeaLevel": return metersAboveSeaLevel.equals(Integer.parseInt(o));
-            case "establishmentDate": return establishmentDate.equals(LocalDate.parse(o));
-            case "telephoneCode": return telephoneCode == Long.parseLong(o);
-            case "climate": return climate.equals(Climate.valueOf(o));
-
-            case "coordinates":
-            case "governor":
-                throw new IllegalArgumentException(String.format("Нельзя сравнивать по полю %s", field));
-
-            default: throw new IllegalArgumentException(String.format("В классе %s нет поля %s", City.class.getName(), field));
-        }
+        return switch (field) {
+            case "id" -> id.equals(Long.parseLong(o));
+            case "name" -> name.equals(o);
+            case "creationDate" -> creationDate.equals(ZonedDateTime.parse(o));
+            case "area" -> area == Long.parseLong(o);
+            case "population" -> population == Integer.parseInt(o);
+            case "metersAboveSeaLevel" -> metersAboveSeaLevel.equals(Integer.parseInt(o));
+            case "establishmentDate" -> establishmentDate.equals(LocalDate.parse(o));
+            case "telephoneCode" -> telephoneCode == Long.parseLong(o);
+            case "climate" -> climate.equals(Climate.valueOf(o));
+            case "coordinates", "governor" ->
+                    throw new IllegalArgumentException(String.format("Нельзя сравнивать по полю %s", field));
+            default ->
+                    throw new IllegalArgumentException(String.format("В классе %s нет поля %s", City.class.getName(), field));
+        };
     }
 
     @Override

@@ -9,7 +9,7 @@
 
   <modules>
     <module>EJB</module>
-    <module>WebService</module>
+    <module>JaxRSWebService</module>
   </modules>
 
   <properties>

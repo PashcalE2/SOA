@@ -1,4 +1,4 @@
-package main.adapter;
+package adapter;
 
 import lombok.AllArgsConstructor;
 

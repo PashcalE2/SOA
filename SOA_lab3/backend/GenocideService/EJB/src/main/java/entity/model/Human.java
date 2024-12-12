@@ -1,4 +1,4 @@
-package main.entity.model;
+package entity.model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import lombok.AllArgsConstructor;

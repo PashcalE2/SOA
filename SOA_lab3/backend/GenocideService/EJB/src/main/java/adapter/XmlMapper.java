@@ -1,4 +1,4 @@
-package main.adapter;
+package adapter;
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.Getter;

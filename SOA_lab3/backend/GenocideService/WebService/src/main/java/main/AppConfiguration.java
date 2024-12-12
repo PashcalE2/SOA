@@ -1,7 +1,7 @@
 package main;
 
-import main.service.PopulationService;
-import main.service.PopulationServiceInterface;
+import service.GenocideService;
+import service.GenocideServiceInterface;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppConfiguration {
     @Bean
-    public PopulationServiceInterface populationService() {
-        return new PopulationService();
+    public GenocideServiceInterface populationService() {
+        return new GenocideService();
     }
 }
