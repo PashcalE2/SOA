@@ -1,7 +1,6 @@
 ignore/
 # Git files
 .git/
-.gitignore
 
 # IntelliJ IDEA files
 .idea/
