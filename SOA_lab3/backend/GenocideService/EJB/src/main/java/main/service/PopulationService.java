@@ -8,12 +8,10 @@ import main.entity.HttpStatus;
 import main.entity.dto.SortOrder;
 import main.entity.model.City;
 import main.exception.AppException;
-import org.jboss.ejb3.annotation.Pool;
 
 
-@Stateless
+@Stateless(name = "PopulationService")
 @Remote(PopulationServiceInterface.class)
-@Pool("genocide-service-pool")
 @Slf4j
 public class PopulationService implements PopulationServiceInterface {
     private final CityServiceAdapter cityServiceAdapter = new CityServiceAdapter();

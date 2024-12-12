@@ -2,18 +2,22 @@ package entity.dto;
 
 import entity.model.City;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
-@XmlRootElement
-public class Cities {
+@XmlRootElement(name = "cities")
+public class Cities implements Serializable {
     private List<City> city;
+
+    public Cities(List<City> city) {
+        this.city = new ArrayList<>(city);
+    }
 }

@@ -21,7 +21,7 @@ import java.util.concurrent.CompletionException;
 @RequiredArgsConstructor
 @Slf4j
 public class CityServiceAdapter {
-    private final String baseEndpoint = "https://localhost:22601";
+    private final String baseEndpoint = "https://localhost:22601/cities";
     private final HttpClient client = HttpClient.newHttpClient();
     private final XmlMapper<City> cityMapper = new XmlMapper<>(City.class);
     private final XmlMapper<CitiesList> citiesListMapper = new XmlMapper<>(CitiesList.class);

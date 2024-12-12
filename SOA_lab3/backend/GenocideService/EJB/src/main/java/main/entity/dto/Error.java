@@ -6,11 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @JacksonXmlRootElement(localName = "error")
-public class Error {
+public class Error implements Serializable {
     private String message;
 }

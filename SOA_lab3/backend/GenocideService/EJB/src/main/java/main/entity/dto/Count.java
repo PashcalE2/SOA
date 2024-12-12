@@ -6,13 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @JacksonXmlRootElement(localName = "count")
-public class Count {
-    // TODO а может...
-    // @JacksonXmlProperty(isAttribute = true)
+public class Count implements Serializable {
     private Long value;
 }

@@ -16,11 +16,11 @@ import java.util.concurrent.TimeUnit;
 @Singleton
 @Slf4j
 public class ConsulRegistration {
-    private static final String SERVICE_NAME = "web-service";
-    private static final String SERVICE_ID = UUID.randomUUID().toString(); // для создания нескольких инстансов
+    private static final String SERVICE_NAME = "city-service";
+    private static final String SERVICE_ID = UUID.randomUUID().toString();
 
     private static final String SERVICE_ADDRESS = "localhost";
-    private static final int SERVICE_PORT = 8080;
+    private static final int SERVICE_PORT = 22601;
     private static final String CONSUL_URL = "http://localhost:8500";
 
     @PostConstruct

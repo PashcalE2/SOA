@@ -19,13 +19,13 @@ public class PopulationController {
     private PopulationServiceInterface populationService;
 
     @GetMapping("/count/{id1}/{id2}/{id3}")
-    public ResponseEntity<?> countPopulation(@PathVariable Long id1, @PathVariable Long id2, @PathVariable Long id3) throws AppException {
+    public ResponseEntity<?> countPopulation(@PathVariable("id1") Long id1, @PathVariable("id2") Long id2, @PathVariable("id3") Long id3) throws AppException {
         log.info("Запрос /count/{}/{}/{}", id1, id2, id3);
         return ResponseEntity.ok(new Count(populationService.countPopulation(id1, id2, id3)));
     }
 
     @PostMapping("/move-to-poorest/{cityId}")
-    public ResponseEntity<?> moveToPoorest(@PathVariable Long cityId) throws AppException {
+    public ResponseEntity<?> moveToPoorest(@PathVariable("cityId") Long cityId) throws AppException {
         log.info("Запрос /move-to-poorest/{}", cityId);
         populationService.moveToPoorest(cityId);
         return ResponseEntity.ok().build();

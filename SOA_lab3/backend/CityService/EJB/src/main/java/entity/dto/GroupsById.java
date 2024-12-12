@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @NoArgsConstructor
@@ -13,6 +14,6 @@ import java.util.List;
 @Getter
 @Setter
 @XmlRootElement(name = "groups")
-public class GroupsById {
+public class GroupsById implements Serializable {
     private List<GroupById> group;
 }

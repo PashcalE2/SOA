@@ -13,10 +13,4 @@ public class AppException extends Exception {
         this.status = status;
         this.extendedClass = AppException.class.getName();
     }
-
-    public AppException(Response.Status status, String message, String extendedClass) {
-        super(message);
-        this.status = status;
-        this.extendedClass = extendedClass;
-    }
 }

@@ -8,13 +8,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Coordinates implements Comparable<Coordinates> {
+public class Coordinates implements Comparable<Coordinates>, Serializable {
     private Float x; //Поле не может быть null
     private double y;
 

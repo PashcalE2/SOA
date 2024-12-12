@@ -1,6 +1,8 @@
 package main.entity;
 
-public enum HttpStatus {
+import java.io.Serializable;
+
+public enum HttpStatus implements Serializable {
     CONTINUE(100, "Continue"),
     SWITCHING_PROTOCOLS(101, "Switching Protocols"),
     OK(200, "OK"),

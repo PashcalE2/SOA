@@ -1,6 +1,8 @@
 package main.entity.model;
 
-public enum Climate {
+import java.io.Serializable;
+
+public enum Climate implements Serializable {
     TROPICAL_SAVANNA,
     HUMIDCONTINENTAL,
     SUBARCTIC,

@@ -6,12 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @XmlRootElement
-public class GroupById {
+public class GroupById implements Serializable {
     private Long id;
     private Long count;
 }

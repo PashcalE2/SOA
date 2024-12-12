@@ -1,5 +1,6 @@
 package resource;
 
+import entity.dto.Error;
 import exception.AppException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;

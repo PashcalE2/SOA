@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import main.entity.model.City;
 
+import java.io.Serializable;
 import java.util.List;
 
 @NoArgsConstructor
@@ -15,7 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @JacksonXmlRootElement(localName = "cities")
-public class CitiesList {
+public class CitiesList implements Serializable {
     @JacksonXmlElementWrapper(useWrapping = false)
     private List<City> city;
 }

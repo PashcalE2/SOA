@@ -6,12 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @JacksonXmlRootElement(localName = "human")
-public class Human implements Comparable<Human> {
+public class Human implements Comparable<Human>, Serializable {
     private String name; //Поле не может быть null, Строка не может быть пустой
     private long age; //Значение поля должно быть больше 0
     private float height; //Значение поля должно быть больше 0

@@ -1,6 +1,8 @@
 package entity.dto;
 
-public enum SortOrder {
+import java.io.Serializable;
+
+public enum SortOrder implements Serializable {
     ASCENDING,
     DESCENDING
 }

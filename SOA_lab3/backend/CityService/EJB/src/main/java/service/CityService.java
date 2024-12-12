@@ -1,9 +1,6 @@
 package service;
 
-import entity.dto.Count;
-import entity.dto.GroupById;
-import entity.dto.GroupsById;
-import entity.dto.SortOrder;
+import entity.dto.*;
 import entity.model.City;
 import entity.model.Climate;
 import entity.repository.CityRepository;
@@ -28,21 +25,21 @@ import java.util.stream.Collectors;
 public class CityService implements CityServiceInterface {
     private static final CityRepository cityRepository = new CityRepository();
 
-    public List<City> get(String filterFields, String filterValues, String sortFields, SortOrder sortOrder, Integer page, Integer size) throws AppException {
+    public Cities get(String filterFields, String filterValues, String sortFields, SortOrder sortOrder, Integer page, Integer size) throws AppException {
         List<City> citiesList = new ArrayList<>(cityRepository.findAll());
         filter(citiesList, filterFields, filterValues);
         sort(citiesList, sortFields, sortOrder);
         citiesList = paginate(citiesList, page, size);
 
-        return citiesList;
+        return new Cities(citiesList);
     }
 
-    public List<City> get(String sortFields, SortOrder sortOrder, Integer page, Integer size) throws AppException {
+    public Cities get(String sortFields, SortOrder sortOrder, Integer page, Integer size) throws AppException {
         List<City> citiesList = new ArrayList<>(cityRepository.findAll());
         sort(citiesList, sortFields, sortOrder);
         citiesList = paginate(citiesList, page, size);
 
-        return citiesList;
+        return new Cities(citiesList);
     }
 
     public City add(City city) throws AppException {

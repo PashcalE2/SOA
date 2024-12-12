@@ -1,6 +1,7 @@
 package main.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import main.entity.dto.Error;
 import main.exception.AppException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

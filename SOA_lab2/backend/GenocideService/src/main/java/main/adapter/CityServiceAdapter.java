@@ -73,7 +73,7 @@ public class CityServiceAdapter {
         return futureResponse.thenApply(response -> citiesListMapper.deserialize(response.body())).join();
     }
 
-    public City putById(Long cityId, City city) throws JsonProcessingException, AppException {
+    public City putById(Long cityId, City city) throws AppException {
         URI uri = URI.create(CitiesApi.PUT_BY_ID.buildUrl(appConfiguration.baseEndpoint, cityId));
         HttpRequest request = HttpRequest
                 .newBuilder()

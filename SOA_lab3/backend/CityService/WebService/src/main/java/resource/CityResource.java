@@ -12,8 +12,6 @@ import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 import service.CityServiceInterface;
 
-import java.util.List;
-
 @Path("/cities")
 @Consumes(MediaType.APPLICATION_XML)
 @Produces(MediaType.APPLICATION_XML)
@@ -32,8 +30,8 @@ public class CityResource {
             @PathParam("page") Integer page,
             @PathParam("size") Integer size
     ) throws AppException {
-        List<City> citiesList = cityService.get(filterFields, filterValues, sortFields, sortOrder, page, size);
-        return Response.ok().entity(new Cities(citiesList)).build();
+        Cities citiesList = cityService.get(filterFields, filterValues, sortFields, sortOrder, page, size);
+        return Response.ok().entity(citiesList).build();
     }
 
     @GET
@@ -44,8 +42,10 @@ public class CityResource {
             @PathParam("page") Integer page,
             @PathParam("size") Integer size
     ) throws AppException {
-        List<City> citiesList = cityService.get(sortFields, sortOrder, page, size);
-        return Response.ok().entity(new Cities(citiesList)).build();
+        log.info("get cities with params: {}, {}, {}, {}", sortFields, sortOrder, page, size);
+        Cities citiesList = cityService.get(sortFields, sortOrder, page, size);
+        log.info("got {} cities", citiesList.getCity().size());
+        return Response.ok().entity(citiesList).build();
     }
 
     @POST
