@@ -29,7 +29,7 @@ function SecondaryService() {
     const getTotalPopulation = useCallback(() => {
         const { id1, id2, id3 } = cityIds;
         if (id1 && id2 && id3) {
-            axios.get(`https://localhost:22701/genocide/count/${id1}/${id2}/${id3}`, {
+            axios.get(`https://localhost:9876/genocide/count/${id1}/${id2}/${id3}`, {
                     headers: {
                         'Accept': 'application/xml',
                         'Content-Type': 'application/xml'
@@ -74,7 +74,7 @@ function SecondaryService() {
     const movePopulation = () => {
         if (moveCityId) {
             axios
-                .post(`https://localhost:22701/genocide/move-to-poorest/${moveCityId}`, {}, {
+                .post(`https://localhost:9876/genocide/move-to-poorest/${moveCityId}`, {}, {
                     headers: {
                         'Accept': 'application/xml',
                         'Content-Type': 'application/xml'
