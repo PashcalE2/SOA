@@ -9,7 +9,6 @@ import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -21,7 +20,7 @@ public class ConsulRegistration {
     private static final String SERVICE_ID = UUID.randomUUID().toString();
 
     private static final String SERVICE_ADDRESS = "localhost";
-    private int SERVICE_PORT = new Random().nextInt(10000, 60000);
+    private final int SERVICE_PORT = Integer.parseInt(System.getenv("SERVICE_PORT"));
     private static final String CONSUL_URL = "http://localhost:8500";
 
     @PostConstruct
@@ -41,7 +40,6 @@ public class ConsulRegistration {
                 log.info("Сервис зарегистрирован в Consul: {} (ID: {})", SERVICE_NAME, SERVICE_ID);
                 break;
             } catch (Exception e) {
-                SERVICE_PORT = new Random().nextInt(10000, 60000);
                 registrationRetryCounter++;
                 log.error("Ошибка регистрации в Consul, попытка {}: {}", registrationRetryCounter, e.getMessage());
                 if (registrationRetryCounter == 5) {
