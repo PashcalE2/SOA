@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="9d8cbfb9-9b7f-406f-a15f-09d3654fbe2c" basePath="/genocide">
+		<http:listener-connection host="0.0.0.0" port="22800" protocol="HTTPS">
+			<tls:context >
+				<tls:key-store type="jks" path="server.keystore" alias="localhost" keyPassword="secret" password="secret" />
+			</tls:context>
+		</http:listener-connection>
+	</http:listener-config>
+	<wsc:config name="Web_Service_Consumer_Config" doc:name="Web Service Consumer Config" doc:id="2aae44c3-252b-49f2-883d-82830aace35d" >
+		<wsc:connection wsdlLocation="http://localhost:22700/GenocideService/GenocideService?wsdl" service="GenocideServiceService" port="GenocideServicePort" address="http://localhost:22700/GenocideService/GenocideService" >
+			<wsc:web-service-security actor="http://schemas.xmlsoap.org/soap/actor/next" />
+		</wsc:connection>
+	</wsc:config>
+	<flow name="countPopulation" doc:id="b5e3509b-859e-4113-bd52-0dbf1f70abd3" >
+		<http:listener doc:name="Listener" doc:id="20f345c9-b045-49e1-b7ad-8ac03fc5269e" config-ref="HTTP_Listener_config" path="/count/{id1}/{id2}/{id3}" allowedMethods="GET">
+			<http:response statusCode="200">
+				<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Access-Control-Allow-Origin" : "*",
+	"Access-Control-Allow-Methods" : "GET, PUT, POST, DELETE, HEAD, OPTIONS",
+	"Access-Control-Allow-Headers" : "*",
+	"Access-Control-Allow-Credentials" : "true"
+}]]]></http:headers>
+			</http:response>
+			<http:error-response statusCode='#[read(error.exception.cause.detail, "application/xml").detail.AppException.error.status]'>
+				<http:body ><![CDATA[#[payload]]]></http:body>
+				<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Access-Control-Allow-Origin" : "*",
+	"Access-Control-Allow-Methods" : "GET, PUT, POST, DELETE, HEAD, OPTIONS",
+	"Access-Control-Allow-Headers" : "*",
+	"Access-Control-Allow-Credentials" : "true"
+}]]]></http:headers>
+			</http:error-response>
+
+		</http:listener>
+		<logger level="INFO" doc:name="Logger" doc:id="1091fc84-a164-43fd-801e-67b27097ca8b" message='#["Полученные идентификаторы: " ++ attributes.uriParams.id1 ++ ", " ++ attributes.uriParams.id2 ++ ", " ++ attributes.uriParams.id3]'/>
+		<ee:transform doc:name="Transform Message" doc:id="efad8454-f61b-4040-9410-71f377daf7b4" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://genocide.lab4.soa/
+---
+{
+	ns0#countPopulation: {
+		id1: attributes.uriParams.id1 as Number,
+		id2: attributes.uriParams.id2 as Number,
+		id3: attributes.uriParams.id3 as Number
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="c334ba8a-6d6b-499d-ba85-0ca8332067b9" message="#[payload]" />
+		<wsc:consume doc:name="Consume" doc:id="bda3abd9-dec5-4dca-b5e6-6c04c302e0d3" config-ref="Web_Service_Consumer_Config" operation="countPopulation" />
+		<logger level="INFO" doc:name="Logger" doc:id="6e1d2d85-9de9-4a34-a6f4-db4bc2ff29b9" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="7b33122f-803f-4fc4-8f05-44c163752cb9" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+ns ns0 http://genocide.lab4.soa/
+output application/xml
+---
+{
+	count: {
+		value: payload.body.ns0#countPopulationResponse.ns0#count default 0
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<error-handler>
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="fe2b2879-4243-4e34-8378-20a935a20860" >
+				<logger level="INFO" doc:name="Logger" doc:id="71ff15fc-9129-411d-aab4-e35084e3b781" message='"Получена ошибка:"'/>
+				<logger level="INFO" doc:name="Logger" doc:id="386a4656-638f-4fd2-b482-acab9fc99510" message='read(error.exception.cause.detail, "application/xml").detail.AppException.error'/>
+				<ee:transform doc:name="Transform Message" doc:id="a0407429-b736-40e8-835b-fa1663acd48e" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns1 http://http://genocide.lab4.soa/
+var detail = read(error.exception.cause.detail, "application/xml")
+---
+{
+	"error": {
+		message: detail.detail.AppException.error.message
+	}
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+	<flow name="moveToPoorest" doc:id="1fac3ca2-8444-40d2-8320-7a854e1f686b">
+		<http:listener doc:name="Listener" doc:id="4d1ae24a-0fff-49dd-bac1-c4688bed06c0" config-ref="HTTP_Listener_config" path="/move-to-poorest/{id}" allowedMethods="POST">
+			<http:response statusCode="200">
+				<http:headers><![CDATA[#[output application/java
+---
+{
+	"Access-Control-Allow-Origin" : "*",
+	"Access-Control-Allow-Methods" : "GET, PUT, POST, DELETE, HEAD, OPTIONS",
+	"Access-Control-Allow-Headers" : "*",
+	"Access-Control-Allow-Credentials" : "true"
+}]]]></http:headers>
+			</http:response>
+			<http:error-response statusCode='#[read(error.exception.cause.detail, "application/xml").detail.AppException.error.status]'>
+				<http:body><![CDATA[#[payload]]]></http:body>
+				<http:headers><![CDATA[#[output application/java
+---
+{
+	"Access-Control-Allow-Origin" : "*",
+	"Access-Control-Allow-Methods" : "GET, PUT, POST, DELETE, HEAD, OPTIONS",
+	"Access-Control-Allow-Headers" : "*",
+	"Access-Control-Allow-Credentials" : "true"
+}]]]></http:headers>
+			</http:error-response>
+		</http:listener>
+		<logger level="INFO" doc:name="Logger" doc:id="daf07aef-1e2e-4b6c-8d18-045651a48224" message='#["Получен идентификатор: " ++ attributes.uriParams.id]'/>
+		<ee:transform doc:name="Transform Message" doc:id="018555c9-9ad1-4e9c-bdf2-fd7128c6eedd">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/xml skipNullOn = "everywhere"
+ns ns0 http://localhost:22700/genocide/move-to-poorest/
+ns ns01 http://genocide.lab4.soa/
+---
+{
+	ns01#moveToPoorest: {
+		cityId: attributes.uriParams.id as Number
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="a1b47337-0c33-4893-84b7-97cb01c229b1" message="#[payload]"/>
+		<wsc:consume doc:name="Consume" doc:id="16a5e860-4e78-4706-8db3-37ba47ccbc90" config-ref="Web_Service_Consumer_Config" operation="moveToPoorest" />
+		<ee:transform doc:name="Transform Message" doc:id="d0b6d779-1fb8-42e3-aed2-fad55ce9cc30">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/xml skipNullOn="everywhere"
+ns ns1 http://genocide.lab4.soa/
+---
+{
+	ns1#moveToPoorestResponse: {}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<error-handler>
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="cd6bef0c-9604-4287-825d-688306cbae79" type="ANY">
+				<logger level="INFO" doc:name="Logger" doc:id="d34532c0-1f50-4699-9800-3e4a2b99a52d" message='#["Получена ошибка:"]' />
+				<logger level="INFO" doc:name="Logger" doc:id="c638843a-1da5-4d88-baed-319498ae1901" message='#[read(error.exception.cause.detail, "application/xml").detail.AppException.error]' />
+				<ee:transform doc:name="Transform Message" doc:id="68c2f934-a094-4acd-90e1-229d833ea5a5">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/xml
+ns ns1 http://http://genocide.lab4.soa/
+var detail = read(error.exception.cause.detail, "application/xml")
+---
+{
+	"error": {
+		message: detail.detail.AppException.error.message
+	}
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+</mule>
